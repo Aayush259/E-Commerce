@@ -1,8 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import appLogo from '../images/app-logo.jpg';
 import { Link, NavLink } from 'react-router-dom';
+import NavigationLink from './NavigationLink';
 
 export default function Nav() {
+
+    // Array of navigation links text and their links.
+    const navigationLinks = [
+        {
+            linkText: 'Products',
+            linkTo: '/'
+        },
+        {
+            linkText: 'Wishlist',
+            linkTo: '/'
+        },
+        {
+            linkText: 'MyCart',
+            linkTo: '/'
+        },
+        {
+            linkText: 'Account',
+            linkTo: '/'
+        },
+        {
+            linkText: 'Logout',
+            linkTo: '/'
+        },
+    ];
 
     // State for hamburger button.
     const [hamActive, setHamActive] = useState(false);
@@ -66,37 +91,13 @@ export default function Nav() {
             </button>
 
             <div
-                className={`text-white text-lg font-medium sm:text-xl flex flex-col lg:flex-row gap-0 lg:gap-4 absolute left-0 lg:static bg-black w-[100vw] lg:w-fit px-0 lg:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
+                className={`text-white text-lg font-medium sm:text-xl flex flex-col lg:flex-row gap-0 lg:gap-8 absolute left-0 lg:static bg-black w-[100vw] lg:w-fit px-0 lg:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
             >
-                <NavLink
-                    className={`w-full text-center py-3 lg:w-fit lg:py-0 sm:hover:scale-105 duration-300`}
-                >
-                    Products
-                </NavLink>
-
-                <NavLink
-                    className={`w-full text-center py-3 lg:w-fit lg:py-0 sm:hover:scale-105 duration-300`}
-                >
-                    Wishlist
-                </NavLink>
-
-                <NavLink
-                    className={`w-full text-center py-3 lg:w-fit lg:py-0 sm:hover:scale-105 duration-300`}
-                >
-                    My Cart
-                </NavLink>
-
-                <NavLink
-                    className={`w-full text-center py-3 lg:w-fit lg:py-0 sm:hover:scale-105 duration-300`}
-                >
-                    Account
-                </NavLink>
-
-                <NavLink
-                    className={`w-full text-center py-3 lg:w-fit lg:py-0 sm:hover:scale-105 duration-300`}
-                >
-                    Logout
-                </NavLink>
+                {
+                    navigationLinks.map(link => (
+                        <NavigationLink key={link['linkText']} linkText={link['linkText']} linkTo={link['linkTo']} />
+                    ))
+                }
             </div>
         </nav>
     );
