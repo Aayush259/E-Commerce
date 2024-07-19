@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import Nav from './components/Nav.jsx';
+import Loader from './components/Loader.jsx';
+import { Outlet } from 'react-router-dom';
 
 export default function App() {
 
   return (
     <>
-      E-Commerce
+    <Nav />
+    <Suspense fallback={<Loader />}>
+      <Outlet />
+    </Suspense>
     </>
   );
 };
