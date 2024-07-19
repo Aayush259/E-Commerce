@@ -1,0 +1,146 @@
+[
+    {
+        "image": "/product-images/bose-quiet-comfort-35.jpg",
+        "name": "Bose QuietComfort 35",
+        "category": "Wireless",
+        "rating": 4,
+        "originalPrice": 7000,
+        "discountPercentage": 25
+    },
+    {
+        "image": "/product-images/sony-srs-xb13.jpg",
+        "name": "Sony SRS-XB13",
+        "category": "Speaker",
+        "rating": 4,
+        "originalPrice": 5000,
+        "discountPercentage": 20
+    },
+    {
+        "image": "/product-images/sony-wh-ch-510.jpg",
+        "name": "Sony WH-CH510",
+        "category": "Wireless",
+        "rating": 3,
+        "originalPrice": 4000,
+        "discountPercentage": 15
+    },
+    {
+        "image": "/product-images/jbl-charge-4.jpg",
+        "name": "JBL Charge 4",
+        "category": "Speaker",
+        "rating": 4,
+        "originalPrice": 3000,
+        "discountPercentage": 10
+    },
+    {
+        "image": "/product-images/base-quiet-comfort.png",
+        "name": "Bose QuietComfort",
+        "category": "Noise Cancelling",
+        "rating": 4,
+        "originalPrice": 5000,
+        "discountPercentage": 30
+    },
+    {
+        "image": "/product-images/bose-sounds-sport-761529.jpg",
+        "name": "Bose SoundSport 761529",
+        "category": "Wireless",
+        "rating": 3,
+        "originalPrice": 800,
+        "discountPercentage": 30
+    },
+    {
+        "image": "/product-images/boat-airdopes.jpg",
+        "name": "boAt Airdopes 121v2",
+        "category": "Wireless",
+        "rating": 4,
+        "originalPrice": 3000,
+        "discountPercentage": 10
+    },
+    {
+        "image": "/product-images/marshall-major.jpg",
+        "name": "Marshall Major IV",
+        "category": "Wireless",
+        "rating": 5,
+        "originalPrice": 5000,
+        "discountPercentage": 5
+    },
+    {
+        "image": "/product-images/marshall-stockwell.jpg",
+        "name": "Marshall Stockwell",
+        "category": "Speaker",
+        "rating": 5,
+        "originalPrice": 5000,
+        "discountPercentage": 5
+    },
+    {
+        "image": "/product-images/boat-airdopes-441.jpg",
+        "name": "boAt Airdopes 441",
+        "category": "Wireless",
+        "rating": 4,
+        "originalPrice": 3000,
+        "discountPercentage": 18
+    },
+    {
+        "image": "/product-images/boat-rockerz-450.jpg",
+        "name": "boAt Rockerz 450",
+        "category": "Wireless",
+        "rating": 3,
+        "originalPrice": 2000,
+        "discountPercentage": 20
+    },
+    {
+        "image": "/product-images/jbl-go-3.jpg",
+        "name": "JBL Go 3",
+        "category": "Speaker",
+        "rating": 4,
+        "originalPrice": 3999,
+        "discountPercentage": 30
+    },
+    {
+        "image": "/product-images/boat-bassheads-242.jpg",
+        "name": "boAt Bassheads 242",
+        "category": "Wired",
+        "rating": 3,
+        "originalPrice": 3000,
+        "discountPercentage": 18
+    },
+    {
+        "image": "/product-images/marshall-stanmore-2.jpg",
+        "name": "Marshall Stanmore II",
+        "category": "Speaker",
+        "rating": 5,
+        "originalPrice": 4000,
+        "discountPercentage": 20
+    },
+    {
+        "image": "/product-images/boat-rockerz-550.jpg",
+        "name": "boAt Rockerz 550",
+        "category": "Wireless",
+        "rating": 4,
+        "originalPrice": 900,
+        "discountPercentage": 30
+    },
+    {
+        "image": "/product-images/sony-mdr-xb55ap.jpg",
+        "name": "Sony MDR-XB55AP",
+        "category": "Wired",
+        "rating": 4,
+        "originalPrice": 4000,
+        "discountPercentage": 15
+    },
+    {
+        "image": "/product-images/sony-mdr-zx110ap.jpg",
+        "name": "Sony MDR-ZX110AP",
+        "category": "Wired",
+        "rating": 4,
+        "originalPrice": 2000,
+        "discountPercentage": 4
+    },
+    {
+        "image": "/product-images/marshall-minor-2.jpg",
+        "name": "Marshall Minor II",
+        "category": "Wireless",
+        "rating": 4,
+        "originalPrice": 3750,
+        "discountPercentage": 5
+    }
+]
