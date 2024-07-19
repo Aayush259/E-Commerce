@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import appLogo from '../images/app-logo.jpg';
-import { Link, NavLink } from 'react-router-dom';
-import NavigationLink from './NavigationLink';
+import { Link } from 'react-router-dom';
+import NavigationLink from './NavigationLink.jsx';
+import Search from './Search.jsx';
 
 export default function Nav() {
 
@@ -69,7 +70,7 @@ export default function Nav() {
                 <img
                     src={appLogo}
                     alt="Sound sphere"
-                    className="w-12 rounded-full m-3"
+                    className="w-12 rounded-full m-3 mxl-0"
                 />
                 <p className="text-xl font-semibold text-white sm:text-3xl">
                     Sound Sphere
@@ -91,8 +92,9 @@ export default function Nav() {
             </button>
 
             <div
-                className={`text-white text-lg font-medium sm:text-xl flex flex-col lg:flex-row gap-0 lg:gap-8 absolute left-0 lg:static bg-black w-[100vw] lg:w-fit px-0 lg:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
+                className={`text-white text-lg font-medium sm:text-xl flex flex-col items-center lg:flex-row gap-0 lg:gap-8 absolute left-0 lg:static bg-black w-[100vw] lg:w-fit px-0 lg:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
             >
+                <Search />
                 {
                     navigationLinks.map(link => (
                         <NavigationLink key={link['linkText']} linkText={link['linkText']} linkTo={link['linkTo']} />
