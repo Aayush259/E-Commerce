@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import Nav from './components/Nav.jsx';
+import Nav from './components/nav/Nav.jsx';
 import Loader from './components/Loader.jsx';
 import { Outlet } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';

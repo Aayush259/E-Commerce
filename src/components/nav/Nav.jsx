@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import appLogo from '../images/app-logo.jpg';
+import appLogo from '../../images/app-logo.jpg';
 import { Link } from 'react-router-dom';
 import NavigationLink from './NavigationLink.jsx';
 import Search from './Search.jsx';

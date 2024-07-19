@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import productImg1 from '../images/product-img-1.jpg';
-import productImg2 from '../images/product-img-2.jpg';
-import productImg3 from '../images/product-img-3.jpg';
+import productImg1 from '../../images/slider-images/product-img-1.jpg';
+import productImg2 from '../../images/slider-images/product-img-2.jpg';
+import productImg3 from '../../images/slider-images/product-img-3.jpg';
 
 export default function ProductImageSlider() {
 
