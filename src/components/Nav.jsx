@@ -81,13 +81,13 @@ export default function Nav() {
                 onClick={handleHamburgerClick}
             >
                 <div
-                    className={`w-8 h-1 bg-white rounded duration-300 ${hamActive ? "rotate-45 translate-y-2" : ""}`}
+                    className={`w-6 h-[2px] bg-white rounded duration-300 ${hamActive ? "rotate-45 translate-y-2" : ""}`}
                 ></div>
                 <div
-                    className={`w-8 h-1 my-[5px] bg-white rounded duration-300 ${hamActive ? "opacity-0" : ""}`}
+                    className={`w-6 h-[2px] my-[4px] bg-white rounded duration-300 ${hamActive ? "opacity-0" : ""}`}
                 ></div>
                 <div
-                    className={`w-8 h-1 bg-white rounded duration-300 ${hamActive ? "-rotate-45 -translate-y-[10px]" : ""}`}
+                    className={`w-6 h-[2px] bg-white rounded duration-300 ${hamActive ? "-rotate-45 -translate-y-[4px]" : ""}`}
                 ></div>
             </button>
 
