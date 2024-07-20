@@ -29,7 +29,7 @@ export default function CartItem({ item }) {
     const inWishlist = isItemInWishlist(itemName);
 
     return (
-        <div className="shadow-product-card-shadow overflow-hidden max-w-[90vw] m-auto rounded-2xl flex flex-row items-center justify-center gap-4 py-4 px-3">
+        <div className="shadow-product-card-shadow overflow-hidden max-w-[90vw] m-auto rounded-2xl flex flex-row items-center justify-center gap-4 py-4 px-3 flex-grow">
             <img src={itemImage} alt={itemName} className="w-24 md:w-32 max-h-full" />
 
             <div className="text-sm md:text-xl">

@@ -16,7 +16,9 @@ export default function Cart() {
                         You haven't added anything in the cart yet.
                     </p>
                 ) : (
-                    <div>
+                    <div
+                        className="md:flex-row flex items-start justify-between px-5"
+                    >
                         <div className="flex flex-col gap-4 my-8">
                             {
                                 cartItems.map(item => (
@@ -25,7 +27,7 @@ export default function Cart() {
                             }
                         </div>
 
-                        <div>
+                        <div className="flex-grow max-w-[40vw]">
                             <PlaceOrderWindow />
                         </div>
                     </div>

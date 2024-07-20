@@ -16,9 +16,6 @@ export default function App() {
   // State for product data.
   const [productData, setProductData] = useState([]);
 
-  // State for user cart.
-  const [cartItems, setCartItems] = useState([]);
-
   useEffect(() => {
 
     fetch('./data.json')
