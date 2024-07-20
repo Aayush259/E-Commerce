@@ -34,7 +34,7 @@ export default function ProductCategories() {
             <div className="flex flex-row flex-wrap items-center justify-start gap-8 my-14">
                 {
                     productCategories.map(category => (
-                        <ProductCategoryCard key={category['name']} productImg={category['image']} productName={category['name']} />
+                        <ProductCategoryCard key={category['name']} categoryImg={category['image']} categoryName={category['name']} />
                     ))
                 }
             </div>

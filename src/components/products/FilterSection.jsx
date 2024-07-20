@@ -24,15 +24,17 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
     // Handle rating preference.
     const handleRatingPreference = (e) => {
         setRatingsPreference(Number(e.target.value))
-    }
+    };
 
     // Handle category change.
-    const handleCategoryChange = (category) => {
-        setSelectedCategories(prev =>
-            prev.includes(category)
-                ? prev.filter(cat => cat !== category)
-                : [...prev, category]
-        );
+    const handleCategoryChange = (e) => {
+        if (e.target.checked) {
+            setSelectedCategories(prevCat => (
+                prevCat.length >= 4 ? [e.target.value] : [...prevCat, e.target.value]
+            ));
+        } else {
+            setSelectedCategories(prevCat => prevCat.includes(e.target.value) ? prevCat.filter(cat => cat !== e.target.value) : [...prevCat])
+        };
     };
 
     // Apply filters and disable filter section.
@@ -113,8 +115,8 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                                 type="checkbox"
                                 name="category"
                                 id="wired"
-                                checked={selectedCategories.includes('Wired')}
-                                onChange={() => handleCategoryChange('Wired')}
+                                value={'Wired'}
+                                onChange={handleCategoryChange}
                             /> Wired
                         </label>
 
@@ -123,8 +125,8 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                                 type="checkbox"
                                 name="category"
                                 id="noiseCancelling"
-                                checked={selectedCategories.includes('Noise Cancelling')}
-                                onChange={() => handleCategoryChange('Noise Cancelling')}
+                                value={'Noise Cancelling'}
+                                onChange={handleCategoryChange}
                             /> Noise Cancelling
                         </label>
 
@@ -133,8 +135,8 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                                 type="checkbox"
                                 name="category"
                                 id="wireless"
-                                checked={selectedCategories.includes('Wireless')}
-                                onChange={() => handleCategoryChange('Wireless')}
+                                value={'Wireless'}
+                                onChange={handleCategoryChange}
                             /> Wireless
                         </label>
 
@@ -143,8 +145,8 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                                 type="checkbox"
                                 name="category"
                                 id="speaker"
-                                checked={selectedCategories.includes('Speaker')}
-                                onChange={() => handleCategoryChange('Speaker')}
+                                value={'Speaker'}
+                                onChange={handleCategoryChange}
                             /> Speaker
                         </label>
                     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import { useParams } from 'react-router-dom';
 import { useProductData } from '../../contexts/ProductDataContext.jsx';
 import FilterSection from './FilterSection.jsx';
 import Loader from '../Loader.jsx';
@@ -9,6 +10,9 @@ export default function Product() {
     // Getting productData state from context.
     const { productData } = useProductData();
 
+    // Getting category name from URL.
+    const { categoryname } = useParams();
+
     // State for products to display.
     const [productsToDisplay, setProductsToDisplay] = useState([]);
 
@@ -17,18 +21,39 @@ export default function Product() {
         'Wired', 'Noise Cancelling', 'Wireless', 'Speaker'
     ]);
 
+    useEffect(() => {
+        if (filterCriteria.length <= 0) {
+            setFilterCriteria(['Wired', 'Noise Cancelling', 'Wireless', 'Speaker']);
+        }
+    }, [filterCriteria]);
+
+    // State to track if user has applied filter
+    const [userAppliedFilter, setUserAppliedFilter] = useState(false);
+
     // State for sorting preference of products.
     const [sortPreference, setSortPreference] = useState('');
 
     // State for ratings preferences.
     const [ratingsPreference, setRatingsPreference] = useState(0);
 
-    // Update productsToDisplay when productData, filterCriteria, or sortPreference changes.
+    // Update filter criteria handler
+    const handleFilterChange = (newFilterCriteria) => {
+        setFilterCriteria(newFilterCriteria);
+        setUserAppliedFilter(true); // Set to true when user applies filter
+    };
+
     useEffect(() => {
-        // Filter according to category.
-        let filteredProducts = productData.filter(product => 
-            filterCriteria.includes(product.category)
-        );
+
+        let finalFilterCriteria;
+        if (userAppliedFilter) {
+            // If user has applied filter, use filterCriteria
+            finalFilterCriteria = filterCriteria;
+        } else {
+            // Otherwise, use categoryname from URL
+            finalFilterCriteria = categoryname ? [categoryname] : ['Wired', 'Noise Cancelling', 'Wireless', 'Speaker'];
+        }
+
+        let filteredProducts = productData.filter(product => finalFilterCriteria.includes(product.category));
 
         // Filter according to ratings.
         filteredProducts = filteredProducts.filter(product => product.rating >= ratingsPreference);
@@ -57,11 +82,12 @@ export default function Product() {
         };
 
         setProductsToDisplay(filteredProducts);
-    }, [productData, filterCriteria, sortPreference, ratingsPreference]);
+
+    }, [categoryname, productData, filterCriteria, sortPreference, ratingsPreference]);
 
     return (
         <div className="flex flex-row flex-wrap justify-start items-start relative">
-            <FilterSection setFilterCriteria={setFilterCriteria} setSortPreference={setSortPreference} setRatingsPreference={setRatingsPreference} />
+            <FilterSection setFilterCriteria={handleFilterChange} setSortPreference={setSortPreference} setRatingsPreference={setRatingsPreference} />
             <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4 lg:ml-72 lg:mr-64">
                 {
                     productsToDisplay ? (
