@@ -20,7 +20,7 @@ export default function FilterSection() {
     return (
         <section className="w-[100vw] lg:w-[250px] max-w-full relative">
             <button
-                className="flex flex-col items-center justify-center text-xl text-white bg-slate-900 p-3 w-full fixed bottom-0 z-30 lg:hidden"
+                className="flex flex-col items-center justify-center text-xl text-white bg-slate-900 p-3 w-full fixed bottom-0 z-20 lg:hidden"
                 onClick={handleFilterBtnClick}
             >
                 <FontAwesomeIcon icon="fa-solid fa-angle-up" className="h-6" />
@@ -28,7 +28,7 @@ export default function FilterSection() {
             </button>
             
             <form
-                className={`${filterActive ? '' : 'hidden'} w-[100vw] lg:w-[250px] max-w-full min-h-[100vh] md:w-auto lg:border-r-2 lg:border-slate-900 fixed z-30 bg-white`}
+                className={`${filterActive ? '' : 'hidden'} w-[100vw] lg:w-[250px] max-w-full min-h-[100vh] md:w-auto lg:border-r-2 lg:border-slate-900 fixed z-[25] bg-white`}
             >
 
                 <div className="flex flex-row items-center justify-between p-4 border-b border-slate-700">
