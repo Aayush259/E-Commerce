@@ -14,7 +14,7 @@ export default function Nav() {
         },
         {
             linkText: 'Wishlist',
-            linkTo: '/'
+            linkTo: '/wishlist'
         },
         {
             linkText: 'MyCart',

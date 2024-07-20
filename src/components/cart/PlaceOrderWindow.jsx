@@ -32,6 +32,7 @@ export default function PlaceOrderWindow() {
                 cartItems.map(item => (
                     <div
                         className="flex flex-row items-center justify-between gap-1 md:text-xl my-1"
+                        key={item['name']}
                     >
                         <span>
                             {item['name']} ({item['count']})

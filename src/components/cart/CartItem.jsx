@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCartData } from '../../contexts/CartDataContext.jsx';
+import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
 
 export default function CartItem({ item }) {
     // Getting functions from CartData context.
     const { removeItemFromCart, incrementItemCount, decrementItemCount } = useCartData();
+
+    // Getting functions from WishlistData context.
+    const { addItemToWishlist, removeItemFromWishlist, isItemInWishlist } = useWishlistData();
 
     // Getting item details.
     const itemImage = item['image'];
@@ -20,6 +24,9 @@ export default function CartItem({ item }) {
             removeItemFromCart(itemName);
         }
     }, [itemQuantity, removeItemFromCart, itemName]);
+    
+    // Check if the item is in the wishlist
+    const inWishlist = isItemInWishlist(itemName);
 
     return (
         <div className="shadow-product-card-shadow overflow-hidden max-w-[90vw] m-auto rounded-2xl flex flex-row items-center justify-center gap-4 py-4 px-3">
@@ -82,8 +89,9 @@ export default function CartItem({ item }) {
 
                     <button
                         className="flex-grow bg-white text-slate-900 hover:bg-slate-900 hover:text-white duration-300 py-3 px-2 border-2 border-slate-900 uppercase"
+                        onClick={() => inWishlist ? removeItemFromWishlist(itemName) : addItemToWishlist(item)}
                     >
-                        Add to Wishlist
+                        {inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
                     </button>
                 </div>
             </div>
