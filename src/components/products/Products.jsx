@@ -10,8 +10,8 @@ export default function Product() {
     // Getting productData state from context.
     const { productData } = useProductData();
 
-    // Getting category name from URL.
-    const { categoryname } = useParams();
+    // Getting category and product name from URL.
+    const { categoryname, productname } = useParams();
 
     // State for products to display.
     const [productsToDisplay, setProductsToDisplay] = useState([]);
@@ -58,6 +58,13 @@ export default function Product() {
         // Filter according to ratings.
         filteredProducts = filteredProducts.filter(product => product.rating >= ratingsPreference);
 
+        // If productname parameter is available in URL, then filter that products, whose name includes the parameter.
+        if (productname) {
+            filteredProducts = filteredProducts.filter(product => (
+                product['name'].toLowerCase().includes(productname.toLowerCase())
+            ));
+        };
+
         // Sort according to discounted price.
         if (sortPreference === 'lowToHigh') {
             filteredProducts = filteredProducts.sort((a, b) => {
@@ -83,7 +90,7 @@ export default function Product() {
 
         setProductsToDisplay(filteredProducts);
 
-    }, [categoryname, productData, filterCriteria, sortPreference, ratingsPreference]);
+    }, [categoryname, productname, productData, filterCriteria, sortPreference, ratingsPreference]);
 
     return (
         <div className="flex flex-row flex-wrap justify-start items-start relative">

@@ -17,7 +17,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='/E-Commerce/products' element={<Product />} />
       <Route path='/E-Commerce/products/category/:categoryname' element={<Product />} />
-      <Route path='/E-Commerce/products/:productname' element={<ProductDetail />} />
+      <Route path='/E-Commerce/products/productName/:productname' element={<Product />} />
       <Route path='/E-Commerce/cart' element={<Cart />} />
       <Route path='/E-Commerce/wishlist' element={<Wishlist />} />
       <Route path='/E-Commerce/account' element={<Account />} />
