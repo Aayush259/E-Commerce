@@ -17,14 +17,23 @@ export default function Product() {
         'Wired', 'Noise Cancelling', 'Wireless', 'Speaker'
     ]);
 
+    // State for sorting preference of products.
     const [sortPreference, setSortPreference] = useState('');
+
+    // State for ratings preferences.
+    const [ratingsPreference, setRatingsPreference] = useState(0);
 
     // Update productsToDisplay when productData, filterCriteria, or sortPreference changes.
     useEffect(() => {
+        // Filter according to category.
         let filteredProducts = productData.filter(product => 
             filterCriteria.includes(product.category)
         );
 
+        // Filter according to ratings.
+        filteredProducts = filteredProducts.filter(product => product.rating >= ratingsPreference);
+
+        // Sort according to discounted price.
         if (sortPreference === 'lowToHigh') {
             filteredProducts = filteredProducts.sort((a, b) => {
                 const priceA = a.originalPrice
@@ -45,14 +54,14 @@ export default function Product() {
 
                 return discountedPriceB - discountedPriceA;
             });
-        }
+        };
 
         setProductsToDisplay(filteredProducts);
-    }, [productData, filterCriteria, sortPreference]);
+    }, [productData, filterCriteria, sortPreference, ratingsPreference]);
 
     return (
         <div className="flex flex-row flex-wrap justify-start items-start relative">
-            <FilterSection setFilterCriteria={setFilterCriteria} setSortPreference={setSortPreference} />
+            <FilterSection setFilterCriteria={setFilterCriteria} setSortPreference={setSortPreference} setRatingsPreference={setRatingsPreference} />
             <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4 lg:ml-72 lg:mr-64">
                 {
                     productsToDisplay ? (

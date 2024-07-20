@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function FilterSection({ setFilterCriteria, setSortPreference }) {
+export default function FilterSection({ setFilterCriteria, setSortPreference, setRatingsPreference }) {
 
     // State for filter section active.
     const [filterActive, setFilterActive] = useState(false);
@@ -20,6 +20,11 @@ export default function FilterSection({ setFilterCriteria, setSortPreference }) 
     const handleSortChange = (e) => {
         setSortPreference(e.target.value);
     };
+
+    // Handle rating preference.
+    const handleRatingPreference = (e) => {
+        setRatingsPreference(Number(e.target.value))
+    }
 
     // Handle category change.
     const handleCategoryChange = (category) => {
@@ -154,7 +159,17 @@ export default function FilterSection({ setFilterCriteria, setSortPreference }) 
 
                     <div className="flex flex-col gap-2 mt-3">
                         <label htmlFor="rating" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
-                            <input type="range" name="rating" id="rating" defaultValue={5} step={1} min={1} max={5} className="w-full max-w-sm" />
+                            <input
+                                type="range"
+                                name="rating"
+                                id="rating"
+                                defaultValue={1}
+                                step={1}
+                                min={1}
+                                max={5}
+                                className="w-full max-w-sm"
+                                onChange={handleRatingPreference}
+                            />
                         </label>
                     </div>
 
@@ -163,7 +178,7 @@ export default function FilterSection({ setFilterCriteria, setSortPreference }) 
                 <button
                     type="submit"
                     className="block bg-slate-900 text-white px-3 py-2 rounded-lg ml-4 text-xl tracking-wider"
-                    onClick={applyFilters}
+                    onChange={applyFilters}
                 >
                     Apply
                 </button>
