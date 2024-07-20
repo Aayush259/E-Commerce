@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function FilterSection({ setFilterCriteria }) {
+export default function FilterSection({ setFilterCriteria, setSortPreference }) {
 
     // State for filter section active.
     const [filterActive, setFilterActive] = useState(false);
@@ -14,6 +14,11 @@ export default function FilterSection({ setFilterCriteria }) {
     // Enables filter section.
     const handleFilterBtnClick = () => {
         setFilterActive(true);
+    };
+
+    // Handle sort change.
+    const handleSortChange = (e) => {
+        setSortPreference(e.target.value);
     };
 
     // Handle category change.
@@ -54,7 +59,10 @@ export default function FilterSection({ setFilterCriteria }) {
                     <button
                         type='reset'
                         className="italic underline bg-slate-200 p-2 rounded-lg sm:hover:opacity-65"
-                        onClick={() => {setSelectedCategories([])}}
+                        onClick={() => {
+                            setSelectedCategories([])
+                            setSortPreference('')
+                        }}
                     >
                         Clear
                     </button>
@@ -67,11 +75,23 @@ export default function FilterSection({ setFilterCriteria }) {
 
                     <div className="flex flex-col gap-2 mt-3">
                         <label htmlFor="highToLow" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
-                            <input type="radio" name="priceFilter" id="highToLow" /> High To Low
+                            <input
+                                type="radio"
+                                name="priceFilter"
+                                id="highToLow"
+                                value="highToLow"
+                                onChange={handleSortChange}
+                            /> High To Low
                         </label>
 
                         <label htmlFor="lowToHigh" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
-                            <input type="radio" name="priceFilter" id="lowToHigh" /> Low To High
+                        <input
+                                type="radio"
+                                name="priceFilter"
+                                id="lowToHigh"
+                                value="lowToHigh"
+                                onChange={handleSortChange}
+                            /> Low To High
                         </label>
                     </div>
 

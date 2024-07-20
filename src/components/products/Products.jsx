@@ -17,25 +17,42 @@ export default function Product() {
         'Wired', 'Noise Cancelling', 'Wireless', 'Speaker'
     ]);
 
-    // Update productsToDisplay when productData is changed.
-    useEffect(() => {
-        setProductsToDisplay(productData);
-    }, [productData]);
+    const [sortPreference, setSortPreference] = useState('');
 
-    // Update productsToDisplay when productData or filterCriteria changes.
+    // Update productsToDisplay when productData, filterCriteria, or sortPreference changes.
     useEffect(() => {
-        const filteredProducts = productData.filter(product => 
-            filterCriteria.includes(product['category'])
+        let filteredProducts = productData.filter(product => 
+            filterCriteria.includes(product.category)
         );
 
-        if (filteredProducts.length <= 0) return;
-        
+        if (sortPreference === 'lowToHigh') {
+            filteredProducts = filteredProducts.sort((a, b) => {
+                const priceA = a.originalPrice
+                const discountedPriceA = priceA - (priceA * (a.discountPercentage / 100))
+
+                const priceB = b.originalPrice
+                const discountedPriceB = priceB - (priceB * (b.discountPercentage / 100))
+
+                return discountedPriceA - discountedPriceB;
+            });
+        } else if (sortPreference === 'highToLow') {
+            filteredProducts = filteredProducts.sort((a, b) => {
+                const priceA = a.originalPrice
+                const discountedPriceA = priceA - (priceA * (a.discountPercentage / 100))
+
+                const priceB = b.originalPrice
+                const discountedPriceB = priceB - (priceB * (b.discountPercentage / 100))
+
+                return discountedPriceB - discountedPriceA;
+            });
+        }
+
         setProductsToDisplay(filteredProducts);
-    }, [productData, filterCriteria]);
+    }, [productData, filterCriteria, sortPreference]);
 
     return (
         <div className="flex flex-row flex-wrap justify-start items-start relative">
-            <FilterSection setFilterCriteria={setFilterCriteria} />
+            <FilterSection setFilterCriteria={setFilterCriteria} setSortPreference={setSortPreference} />
             <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4 lg:ml-72 lg:mr-64">
                 {
                     productsToDisplay ? (
