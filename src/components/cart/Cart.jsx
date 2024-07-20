@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCartData } from '../../contexts/CartDataContext.jsx';
 import CartItem from './CartItem.jsx';
+import PlaceOrderWindow from './PlaceOrderWindow.jsx';
 
 export default function Cart() {
 
@@ -15,12 +16,18 @@ export default function Cart() {
                         You haven't added anything in the cart yet.
                     </p>
                 ) : (
-                    <div className="flex flex-col gap-4 mt-8">
-                        {
-                            cartItems.map(item => (
-                                <CartItem key={item['name']} item={item} />
-                            ))
-                        }
+                    <div>
+                        <div className="flex flex-col gap-4 my-8">
+                            {
+                                cartItems.map(item => (
+                                    <CartItem key={item['name']} item={item} />
+                                ))
+                            }
+                        </div>
+
+                        <div>
+                            <PlaceOrderWindow />
+                        </div>
                     </div>
                 )
             }

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCartData } from '../../contexts/CartDataContext.jsx';
 
 export default function CartItem({ item }) {
-
-    // Getting remove item function from CartData context.
-    const { removeItemFromCart } = useCartData();
+    // Getting functions from CartData context.
+    const { removeItemFromCart, incrementItemCount, decrementItemCount } = useCartData();
 
     // Getting item details.
     const itemImage = item['image'];
@@ -13,16 +12,14 @@ export default function CartItem({ item }) {
     const itemPrice = item['originalPrice'];
     const discountPercentage = item['discountPercentage'];
     const discountPrice = itemPrice - (itemPrice * (discountPercentage / 100));
-
-    // Item quantity state.
-    const [itemQuantity, setItemQuantity] = useState(1);
+    const itemQuantity = item['count'];
 
     // If item quantity is zero, remove it form cart.
     useEffect(() => {
         if (itemQuantity <= 0) {
             removeItemFromCart(itemName);
         }
-    }, [itemQuantity]);
+    }, [itemQuantity, removeItemFromCart, itemName]);
 
     return (
         <div className="shadow-product-card-shadow overflow-hidden max-w-[90vw] m-auto rounded-2xl flex flex-row items-center justify-center gap-4 py-4 px-3">
@@ -56,7 +53,7 @@ export default function CartItem({ item }) {
                         <div className="flex flex-row items-center justify-center gap-0">
                             <button
                                 className="hover:opacity-75"
-                                onClick={() => {setItemQuantity(prevCount => prevCount - 1)}}
+                                onClick={() => decrementItemCount(itemName)}
                             >
                                 <FontAwesomeIcon icon="fa-solid fa-minus" className="text-white bg-black rounded-full h-4 w-4 p-[1.5px]" />
                             </button>
@@ -67,7 +64,7 @@ export default function CartItem({ item }) {
 
                             <button
                                 className="hover:opacity-75"
-                                onClick={() => {setItemQuantity(prevCount => prevCount + 1)}}
+                                onClick={() => incrementItemCount(itemName)}
                             >
                                 <FontAwesomeIcon icon="fa-solid fa-plus" className="text-white bg-black rounded-full h-4 w-4 p-[1.5px]" />
                             </button>
@@ -76,10 +73,9 @@ export default function CartItem({ item }) {
                 </div>
 
                 <div className="flex flex-row flex-wrap w-full items-center justify-center gap-4 mt-5 pb-2">
-
                     <button
                         className="flex-grow bg-slate-900 text-white hover:bg-white hover:text-slate-900 duration-300 py-3 px-2 border-2 border-slate-900 uppercase"
-                        onClick={() => setItemQuantity(0)}
+                        onClick={() => removeItemFromCart(itemName)}
                     >
                         Remove From Cart
                     </button>
