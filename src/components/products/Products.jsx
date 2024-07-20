@@ -98,9 +98,19 @@ export default function Product() {
             <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4 lg:ml-72 lg:mr-64">
                 {
                     productsToDisplay ? (
-                        productsToDisplay.map(product => (
-                            <ProductCard key={product['name']} productDetails={product} />
-                        ))
+
+                        productsToDisplay.length <= 0 ? (
+                            <p
+                                className="text-xl md:text-3xl text-center my-8"
+                            >
+                                No items found for that...
+                            </p>
+                        ) : (
+                            productsToDisplay.map(product => (
+                                <ProductCard key={product['name']} productDetails={product} />
+                            ))
+                        )
+
                     ) : <Loader />
                 }
             </div>

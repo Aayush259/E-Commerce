@@ -13,6 +13,12 @@ export default function Search() {
         }
     };
 
+    const handleInputChange = () => {
+        if (!inputRef.current.value) {
+            navigate(`/E-Commerce/products/`);
+        };
+    };
+
     return (
         <div className="bg-white max-w-[90%] mx-auto my-5 rounded-3xl text-black font-normal overflow-hidden flex flex-row items-center justify-center">
             <label htmlFor="searchBar">
@@ -26,6 +32,7 @@ export default function Search() {
                             handleSearchBtnClick()
                         }
                     }}
+                    onChange={handleInputChange}
                 />
             </label>
             <button
