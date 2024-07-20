@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProductCard from './ProductCard';
-import { useProductData } from '../../contexts/ProductDataContext';
-import FilterSection from './FilterSection';
+import { useProductData } from '../../contexts/ProductDataContext.jsx';
+import FilterSection from './FilterSection.jsx';
+import Loader from '../Loader.jsx';
 
 export default function Product() {
 
     // Getting productData state from context.
-    const { productData, setProductData } = useProductData();
-
-    useEffect(() => {
-
-        fetch('./data.json')
-        .then(response => response.json())
-        .then(data => setProductData(data))
-        .catch(err => console.log(err))
-        
-    }, []);
+    const { productData } = useProductData();
 
     return (
         <div className="flex flex-row flex-wrap justify-start items-start relative">
@@ -26,7 +18,7 @@ export default function Product() {
                         productData.map(product => (
                             <ProductCard key={product['name']} productDetails={product} />
                         ))
-                    ) : null
+                    ) : <Loader />
                 }
             </div>
         </div>

@@ -1,10 +1,10 @@
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
 
 export default function FilterSection() {
 
     // State for filter section active.
-    const [filterActive, setFilterActive] = useState(true);
+    const [filterActive, setFilterActive] = useState(false);
 
     // Enables filter section.
     const handleFilterBtnClick = () => {

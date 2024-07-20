@@ -12,7 +12,16 @@ library.add(fas, fab);
 export default function App() {
 
   // State for product data.
-  const [productData, setProductData] = useState(null);
+  const [productData, setProductData] = useState([]);
+
+  useEffect(() => {
+
+    fetch('/data.json')
+      .then(response => response.json())
+      .then(data => setProductData(data))
+      .catch(err => console.log(err))
+
+  }, []);
 
   useEffect(() => {
     document.body.classList.add('w-[100vw]');
@@ -21,12 +30,12 @@ export default function App() {
 
   return (
     <>
-    <Nav />
-    <ProductDataProvider values={{ productData, setProductData }}>
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
-    </ProductDataProvider>
+      <Nav />
+      <ProductDataProvider values={{ productData }}>
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+      </ProductDataProvider>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 export default function ProductCard({ productDetails }) {
 
@@ -18,31 +19,33 @@ export default function ProductCard({ productDetails }) {
                 <FontAwesomeIcon icon="fa-solid fa-heart" className="h-5 text-slate-400" />
             </button>
 
-            <img src={productImg} alt="" className="block m-auto h-60" />
+                <Link to={`/products/${productName}`}>
+                <img src={productImg} alt="" className="block m-auto h-60" />
 
-            <div className="flex flex-row items-start justify-between my-4">
-                <p className="font-semibold text-slate-900">
-                    {productName}
-                </p>
+                <div className="flex flex-row items-start justify-between my-4">
+                    <p className="font-semibold text-slate-900">
+                        {productName}
+                    </p>
 
-                <div className="bg-slate-900 p-1 text-white flex flex-row items-start justify-center gap-1 rounded-lg">
-                    {rating}
-                    <FontAwesomeIcon icon="fa-solid fa-star" className="h-3" />
+                    <div className="bg-slate-900 p-1 text-white flex flex-row items-start justify-center gap-1 rounded-lg">
+                        {rating}
+                        <FontAwesomeIcon icon="fa-solid fa-star" className="h-3" />
+                    </div>
                 </div>
-            </div>
 
-            <div className="flex flex-row items-center justify-between mt-8">
-                <p>
-                    <span className="font-semibold text-slate-900">
-                        &#8377;
-                        {discountedPrice}
-                    </span>
-                    <span className="ml-2 line-through text-slate-500 font-thin">
-                        &#8377;{originalPrice}
-                    </span>
-                </p>
-                <p className="font-semibold text-green-600">{discountPercentage}% OFF</p>
-            </div>
+                <div className="flex flex-row items-center justify-between mt-8">
+                    <p>
+                        <span className="font-semibold text-slate-900">
+                            &#8377;
+                            {discountedPrice}
+                        </span>
+                        <span className="ml-2 line-through text-slate-500 font-thin">
+                            &#8377;{originalPrice}
+                        </span>
+                    </p>
+                    <p className="font-semibold text-green-600">{discountPercentage}% OFF</p>
+                </div>
+            </Link>
 
             <button className="bg-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase">
                 Add To Cart
