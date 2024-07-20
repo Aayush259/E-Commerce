@@ -51,7 +51,7 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                 <FontAwesomeIcon icon="fa-solid fa-angle-up" className="h-6" />
                 <span>Filters</span>
             </button>
-            
+
             <form
                 className={`${filterActive ? '' : 'hidden'} w-[100vw] lg:block lg:w-[250px] max-w-full pb-24 h-[100vh] overflow-y-auto lg:border-r-2 lg:border-slate-900 fixed z-[25] bg-white`}
             >
@@ -90,7 +90,7 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                         </label>
 
                         <label htmlFor="lowToHigh" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
-                        <input
+                            <input
                                 type="radio"
                                 name="priceFilter"
                                 id="lowToHigh"
@@ -119,7 +119,7 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                         </label>
 
                         <label htmlFor="noiseCancelling" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
-                        <input
+                            <input
                                 type="checkbox"
                                 name="category"
                                 id="noiseCancelling"
@@ -129,7 +129,7 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                         </label>
 
                         <label htmlFor="wireless" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
-                        <input
+                            <input
                                 type="checkbox"
                                 name="category"
                                 id="wireless"
@@ -139,7 +139,7 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                         </label>
 
                         <label htmlFor="speaker" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
-                        <input
+                            <input
                                 type="checkbox"
                                 name="category"
                                 id="speaker"
@@ -158,6 +158,11 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                     </p>
 
                     <div className="flex flex-col gap-2 mt-3">
+                        <div className="flex justify-between mb-2">
+                            {[1, 2, 3, 4, 5].map(rating => (
+                                <span key={rating} className="text-sm font-medium">{rating}</span>
+                            ))}
+                        </div>
                         <label htmlFor="rating" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
                             <input
                                 type="range"
@@ -178,7 +183,7 @@ export default function FilterSection({ setFilterCriteria, setSortPreference, se
                 <button
                     type="submit"
                     className="block bg-slate-900 text-white px-3 py-2 rounded-lg ml-4 text-xl tracking-wider"
-                    onChange={applyFilters}
+                    onClick={applyFilters}
                 >
                     Apply
                 </button>
