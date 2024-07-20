@@ -66,7 +66,7 @@ export default function Nav() {
                 e.stopPropagation();
             }}
         >
-            <Link to={'/'} className="w-fit relative z-20 flex items-center justify-start flex-grow bg-black lg:flex-grow-0 sm:hover:opacity-65 duration-300">
+            <Link to={'/E-Commerce/'} className="w-fit relative z-20 flex items-center justify-start flex-grow bg-black lg:flex-grow-0 sm:hover:opacity-65 duration-300">
                 <img
                     src={appLogo}
                     alt="Sound sphere"
