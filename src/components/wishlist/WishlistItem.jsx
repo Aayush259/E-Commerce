@@ -36,7 +36,7 @@ export default function WishlistItem({ item }) {
                 />
             </button>
 
-            <Link to={`/products/${itemName}`}>
+            <Link to={`/E-Commerce/products/${itemName}`}>
                 <img src={itemImage} alt={itemName} className="block m-auto h-60" />
 
                 <div className="flex flex-row items-start justify-between my-4">
@@ -73,7 +73,7 @@ export default function WishlistItem({ item }) {
 
             {inCart ? (
                 <Link
-                    to="/cart"
+                    to="/E-Commerce/cart"
                     className="block text-center bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300"
                 >
                     Go to Cart

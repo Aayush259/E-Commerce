@@ -13,14 +13,14 @@ import Login from './components/login/Login.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<App />}>
+    <Route path='/E-Commerce/' element={<App />}>
       <Route index element={<Home />} />
-      <Route path='/products' element={<Product />} />
-      <Route path='/products/:productname' element={<ProductDetail />} />
-      <Route path='/cart' element={<Cart />} />
-      <Route path='/wishlist' element={<Wishlist />} />
-      <Route path='/account' element={<Account />} />
-      <Route path='/login' element={<Login />} />
+      <Route path='/E-Commerce/products' element={<Product />} />
+      <Route path='/E-Commerce/products/:productname' element={<ProductDetail />} />
+      <Route path='/E-Commerce/cart' element={<Cart />} />
+      <Route path='/E-Commerce/wishlist' element={<Wishlist />} />
+      <Route path='/E-Commerce/account' element={<Account />} />
+      <Route path='/E-Commerce/login' element={<Login />} />
     </Route>
   )
 );

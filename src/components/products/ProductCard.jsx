@@ -64,7 +64,7 @@ export default function ProductCard({ productDetails }) {
                 />
             </button>
 
-                <Link to={`/products/${productName}`}>
+                <Link to={`/E-Commerce/products/${productName}`}>
                 <img src={productImg} alt="" className="block m-auto h-60" />
 
                 <div className="flex flex-row items-start justify-between my-4">

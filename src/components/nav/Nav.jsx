@@ -10,23 +10,23 @@ export default function Nav() {
     const navigationLinks = [
         {
             linkText: 'Products',
-            linkTo: '/products'
+            linkTo: '/E-Commerce/products'
         },
         {
             linkText: 'Wishlist',
-            linkTo: '/wishlist'
+            linkTo: '/E-Commerce/wishlist'
         },
         {
             linkText: 'MyCart',
-            linkTo: '/cart'
+            linkTo: '/E-Commerce/cart'
         },
         {
             linkText: 'Account',
-            linkTo: '/account'
+            linkTo: '/E-Commerce/account'
         },
         {
-            linkText: 'Logout',
-            linkTo: '/'
+            linkText: 'Login',
+            linkTo: '/E-Commerce.login'
         },
     ];
 
