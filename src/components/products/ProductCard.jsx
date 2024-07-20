@@ -6,11 +6,13 @@ export default function ProductCard({ productDetails }) {
     // Getting product details.
     const productImg = productDetails['image'];
     const productName = productDetails['name'];
+    const rating = productDetails['rating'];
     const originalPrice = productDetails['originalPrice'];
     const discountPercentage = productDetails['discountPercentage'];
+    const discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100));
 
     return (
-        <div className="relative p-4 my-4 mx-auto w-64 max-w-[70vw] rounded-2xl shadow-product-card-shadow hover:shadow-product-card-shadow-hover duration-300">
+        <div className="relative p-4 mx-auto w-64 max-w-[70vw] rounded-2xl shadow-product-card-shadow hover:shadow-product-card-shadow-hover duration-300">
 
             <button className="absolute top-0 right-0 m-2">
                 <FontAwesomeIcon icon="fa-solid fa-heart" className="h-5 text-slate-400" />
@@ -24,7 +26,7 @@ export default function ProductCard({ productDetails }) {
                 </p>
 
                 <div className="bg-slate-900 p-1 text-white flex flex-row items-start justify-center gap-1 rounded-lg">
-                    4
+                    {rating}
                     <FontAwesomeIcon icon="fa-solid fa-star" className="h-3" />
                 </div>
             </div>
@@ -33,9 +35,7 @@ export default function ProductCard({ productDetails }) {
                 <p>
                     <span className="font-semibold text-slate-900">
                         &#8377;
-                        {
-                            originalPrice - originalPrice * (discountPercentage / 100)
-                        }
+                        {discountedPrice}
                     </span>
                     <span className="ml-2 line-through text-slate-500 font-thin">
                         &#8377;{originalPrice}
