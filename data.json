@@ -1,6 +1,6 @@
 [
     {
-        "image": "/product-images/bose-quiet-comfort-35.jpg",
+        "image": "./product-images/bose-quiet-comfort-35.jpg",
         "name": "Bose QuietComfort 35",
         "category": "Wireless",
         "brand": "bose",
@@ -11,7 +11,7 @@
         "discountPercentage": 25
     },
     {
-        "image": "/product-images/sony-srs-xb13.jpg",
+        "image": "./product-images/sony-srs-xb13.jpg",
         "name": "Sony SRS-XB13",
         "category": "Speaker",
         "brand": "sony",
@@ -22,7 +22,7 @@
         "discountPercentage": 20
     },
     {
-        "image": "/product-images/sony-wh-ch-510.jpg",
+        "image": "./product-images/sony-wh-ch-510.jpg",
         "name": "Sony WH-CH510",
         "category": "Wireless",
         "brand": "sony",
@@ -33,7 +33,7 @@
         "discountPercentage": 15
     },
     {
-        "image": "/product-images/jbl-charge-4.jpg",
+        "image": "./product-images/jbl-charge-4.jpg",
         "name": "JBL Charge 4",
         "category": "Speaker",
         "brand": "jbl",
@@ -44,7 +44,7 @@
         "discountPercentage": 10
     },
     {
-        "image": "/product-images/base-quiet-comfort.png",
+        "image": "./product-images/base-quiet-comfort.png",
         "name": "Bose QuietComfort",
         "category": "Noise Cancelling",
         "brand": "bose",
@@ -55,7 +55,7 @@
         "discountPercentage": 30
     },
     {
-        "image": "/product-images/bose-sounds-sport-761529.jpg",
+        "image": "./product-images/bose-sounds-sport-761529.jpg",
         "name": "Bose SoundSport 761529",
         "category": "Wireless",
         "brand": "bose",
@@ -66,7 +66,7 @@
         "discountPercentage": 30
     },
     {
-        "image": "/product-images/boat-airdopes.jpg",
+        "image": "./product-images/boat-airdopes.jpg",
         "name": "boAt Airdopes 121v2",
         "category": "Wireless",
         "brand": "boat",
@@ -77,7 +77,7 @@
         "discountPercentage": 10
     },
     {
-        "image": "/product-images/marshall-major.jpg",
+        "image": "./product-images/marshall-major.jpg",
         "name": "Marshall Major IV",
         "category": "Wireless",
         "brand": "marshall",
@@ -88,7 +88,7 @@
         "discountPercentage": 5
     },
     {
-        "image": "/product-images/marshall-stockwell.jpg",
+        "image": "./product-images/marshall-stockwell.jpg",
         "name": "Marshall Stockwell",
         "category": "Speaker",
         "brand": "marshall",
@@ -99,7 +99,7 @@
         "discountPercentage": 5
     },
     {
-        "image": "/product-images/boat-airdopes-441.jpg",
+        "image": "./product-images/boat-airdopes-441.jpg",
         "name": "boAt Airdopes 441",
         "category": "Wireless",
         "brand": "boat",
@@ -110,7 +110,7 @@
         "discountPercentage": 18
     },
     {
-        "image": "/product-images/boat-rockerz-450.jpg",
+        "image": "./product-images/boat-rockerz-450.jpg",
         "name": "boAt Rockerz 450",
         "category": "Wireless",
         "brand": "boat",
@@ -121,7 +121,7 @@
         "discountPercentage": 20
     },
     {
-        "image": "/product-images/jbl-go-3.jpg",
+        "image": "./product-images/jbl-go-3.jpg",
         "name": "JBL Go 3",
         "category": "Speaker",
         "brand": "jbl",
@@ -132,7 +132,7 @@
         "discountPercentage": 30
     },
     {
-        "image": "/product-images/boat-bassheads-242.jpg",
+        "image": "./product-images/boat-bassheads-242.jpg",
         "name": "boAt Bassheads 242",
         "category": "Wired",
         "brand": "boat",
@@ -143,7 +143,7 @@
         "discountPercentage": 18
     },
     {
-        "image": "/product-images/marshall-stanmore-2.jpg",
+        "image": "./product-images/marshall-stanmore-2.jpg",
         "name": "Marshall Stanmore II",
         "category": "Speaker",
         "brand": "marshall",
@@ -154,7 +154,7 @@
         "discountPercentage": 20
     },
     {
-        "image": "/product-images/boat-rockerz-550.jpg",
+        "image": "./product-images/boat-rockerz-550.jpg",
         "name": "boAt Rockerz 550",
         "category": "Wireless",
         "brand": "boat",
@@ -165,7 +165,7 @@
         "discountPercentage": 30
     },
     {
-        "image": "/product-images/sony-mdr-xb55ap.jpg",
+        "image": "./product-images/sony-mdr-xb55ap.jpg",
         "name": "Sony MDR-XB55AP",
         "category": "Wired",
         "brand": "sony",
@@ -176,7 +176,7 @@
         "discountPercentage": 15
     },
     {
-        "image": "/product-images/sony-mdr-zx110ap.jpg",
+        "image": "./product-images/sony-mdr-zx110ap.jpg",
         "name": "Sony MDR-ZX110AP",
         "category": "Wired",
         "brand": "sony",
@@ -187,7 +187,7 @@
         "discountPercentage": 4
     },
     {
-        "image": "/product-images/marshall-minor-2.jpg",
+        "image": "./product-images/marshall-minor-2.jpg",
         "name": "Marshall Minor II",
         "category": "Wireless",
         "brand": "marshall",
