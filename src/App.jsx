@@ -7,6 +7,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { ProductDataProvider } from './contexts/ProductDataContext.jsx';
 import { CartDataProvider } from './contexts/CartDataContext.jsx';
+import { WishlistDataProvider } from './contexts/WishlistDataContext.jsx';
 
 library.add(fas, fab);
 
@@ -36,10 +37,12 @@ export default function App() {
     <>
       <Nav />
       <ProductDataProvider values={{ productData }}>
-        <CartDataProvider values={{ cartItems, setCartItems }}>
-          <Suspense fallback={<Loader />}>
-            <Outlet />
-          </Suspense>
+        <CartDataProvider>
+          <WishlistDataProvider>
+            <Suspense fallback={<Loader />}>
+              <Outlet />
+            </Suspense>
+          </WishlistDataProvider>
         </CartDataProvider>
       </ProductDataProvider>
     </>

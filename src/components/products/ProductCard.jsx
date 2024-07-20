@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCartData } from '../../contexts/CartDataContext';
+import { useCartData } from '../../contexts/CartDataContext.jsx';
+import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
 
 export default function ProductCard({ productDetails }) {
 
     // Getting required functions from CartData context.
     const { addItemToCart, removeItemFromCart, isItemInCart } = useCartData();
+
+    // Getting required functions from WishlistDataContext.
+    const { addItemToWishlist, removeItemFromWishlist, isItemInWishlist } = useWishlistData();
 
     // Getting product details.
     const productImg = productDetails['image'];
@@ -19,22 +23,45 @@ export default function ProductCard({ productDetails }) {
     // State to check if the product is already in the cart
     const [isAddedInCart, setIsAddedInCart] = useState(isItemInCart(productName));
 
+    // State to check if the product is already in the wishlist.
+    const [isAddedInWishlist, setIsAddedInWishlist] = useState(isItemInWishlist(productName));
+
     // Handle add/remove from cart.
     const handleCartAction = () => {
         if (isAddedInCart) {
             removeItemFromCart(productName);
         } else {
             addItemToCart(productDetails);
-        }
+        };
 
         setIsAddedInCart(preVal => !preVal);
+    };
+
+    // Handle add/remove from wishlist.
+    const handleWishlistAction = () => {
+        if (isAddedInWishlist) {
+            removeItemFromWishlist(productName);
+        } else {
+            addItemToWishlist(productDetails);
+        };
+
+        setIsAddedInWishlist(preVal => !preVal);
     };
 
     return (
         <div className="relative p-4 mx-auto w-64 max-w-[70vw] rounded-2xl shadow-product-card-shadow hover:shadow-product-card-shadow-hover duration-300">
 
-            <button className="absolute top-0 right-0 m-2">
-                <FontAwesomeIcon icon="fa-solid fa-heart" className="h-5 text-slate-400" />
+            <button
+                className="absolute top-0 right-0 m-2"
+                onClick={handleWishlistAction}
+            >
+                <FontAwesomeIcon
+                    icon="fa-solid fa-heart"
+                    className={`
+                        h-5
+                        ${isAddedInWishlist ? 'text-red-600' : 'text-slate-400'}
+                    `}
+                />
             </button>
 
                 <Link to={`/products/${productName}`}>
