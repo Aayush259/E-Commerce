@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ProductCard from './ProductCard';
 import { useProductData } from '../../contexts/ProductDataContext';
+import FilterSection from './FilterSection';
 
 export default function Product() {
 
@@ -17,14 +18,17 @@ export default function Product() {
     }, []);
 
     return (
-        <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4">
-            {
-                productData ? (
-                    productData.map(product => (
-                        <ProductCard key={product['name']} productDetails={product} />
-                    ))
-                ) : null
-            }
+        <div className="flex flex-row flex-wrap justify-start items-start relative">
+            <FilterSection />
+            <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4">
+                {
+                    productData ? (
+                        productData.map(product => (
+                            <ProductCard key={product['name']} productDetails={product} />
+                        ))
+                    ) : null
+                }
+            </div>
         </div>
     );
 };

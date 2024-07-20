@@ -61,7 +61,7 @@ export default function Nav() {
 
     return (
         <nav
-            className="bg-black relative flex flex-row items-center justify-between px-3"
+            className="bg-black sticky top-0 z-30 flex flex-row items-center justify-between px-3"
             onClick={(e) => {
                 e.stopPropagation();
             }}
