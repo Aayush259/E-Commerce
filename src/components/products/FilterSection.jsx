@@ -1,20 +1,35 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function FilterSection() {
+export default function FilterSection({ setFilterCriteria }) {
 
     // State for filter section active.
     const [filterActive, setFilterActive] = useState(false);
+
+    // State for selected categories.
+    const [selectedCategories, setSelectedCategories] = useState([
+        'Wired', 'Noise Cancelling', 'Wireless', 'Speaker'
+    ]);
 
     // Enables filter section.
     const handleFilterBtnClick = () => {
         setFilterActive(true);
     };
 
+    // Handle category change.
+    const handleCategoryChange = (category) => {
+        setSelectedCategories(prev =>
+            prev.includes(category)
+                ? prev.filter(cat => cat !== category)
+                : [...prev, category]
+        );
+    };
+
     // Apply filters and disable filter section.
     const applyFilters = (e) => {
         e.preventDefault();
         setFilterActive(false);
+        setFilterCriteria(selectedCategories);
     };
 
     return (
@@ -39,6 +54,7 @@ export default function FilterSection() {
                     <button
                         type='reset'
                         className="italic underline bg-slate-200 p-2 rounded-lg sm:hover:opacity-65"
+                        onClick={() => {setSelectedCategories([])}}
                     >
                         Clear
                     </button>
@@ -50,11 +66,11 @@ export default function FilterSection() {
                     </p>
 
                     <div className="flex flex-col gap-2 mt-3">
-                        <label htmlFor="highToLow" className="flex flex-row items-center justify-start gap-2">
+                        <label htmlFor="highToLow" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
                             <input type="radio" name="priceFilter" id="highToLow" /> High To Low
                         </label>
 
-                        <label htmlFor="lowToHigh" className="flex flex-row items-center justify-start gap-2">
+                        <label htmlFor="lowToHigh" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
                             <input type="radio" name="priceFilter" id="lowToHigh" /> Low To High
                         </label>
                     </div>
@@ -67,20 +83,44 @@ export default function FilterSection() {
                     </p>
 
                     <div className="flex flex-col gap-2 mt-3">
-                        <label htmlFor="wired" className="flex flex-row items-center justify-start gap-2">
-                            <input type="checkbox" name="category" id="wired" /> Wired
+                        <label htmlFor="wired" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="category"
+                                id="wired"
+                                checked={selectedCategories.includes('Wired')}
+                                onChange={() => handleCategoryChange('Wired')}
+                            /> Wired
                         </label>
 
-                        <label htmlFor="noiseCancelling" className="flex flex-row items-center justify-start gap-2">
-                            <input type="checkbox" name="category" id="noiseCancelling" /> Noise Cancelling
+                        <label htmlFor="noiseCancelling" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
+                        <input
+                                type="checkbox"
+                                name="category"
+                                id="noiseCancelling"
+                                checked={selectedCategories.includes('Noise Cancelling')}
+                                onChange={() => handleCategoryChange('Noise Cancelling')}
+                            /> Noise Cancelling
                         </label>
 
-                        <label htmlFor="wireless" className="flex flex-row items-center justify-start gap-2">
-                            <input type="checkbox" name="category" id="wireless" /> Wireless
+                        <label htmlFor="wireless" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
+                        <input
+                                type="checkbox"
+                                name="category"
+                                id="wireless"
+                                checked={selectedCategories.includes('Wireless')}
+                                onChange={() => handleCategoryChange('Wireless')}
+                            /> Wireless
                         </label>
 
-                        <label htmlFor="speaker" className="flex flex-row items-center justify-start gap-2">
-                            <input type="checkbox" name="category" id="speaker" /> Speaker
+                        <label htmlFor="speaker" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
+                        <input
+                                type="checkbox"
+                                name="category"
+                                id="speaker"
+                                checked={selectedCategories.includes('Speaker')}
+                                onChange={() => handleCategoryChange('Speaker')}
+                            /> Speaker
                         </label>
                     </div>
 
@@ -93,7 +133,7 @@ export default function FilterSection() {
                     </p>
 
                     <div className="flex flex-col gap-2 mt-3">
-                        <label htmlFor="rating" className="flex flex-row items-center justify-start gap-2">
+                        <label htmlFor="rating" className="flex flex-row items-center justify-start gap-2 cursor-pointer">
                             <input type="range" name="rating" id="rating" defaultValue={5} step={1} min={1} max={5} className="w-full max-w-sm" />
                         </label>
                     </div>
