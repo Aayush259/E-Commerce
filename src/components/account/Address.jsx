@@ -63,16 +63,19 @@ export default function Account() {
                 <div className="flex flex-row items-center justify-center flex-wrap text-white w-full px-6 py-5 gap-[2px]">
                     <button
                         className="bg-slate-900 p-3 border border-slate-900 font-semibold flex-grow hover:bg-white hover:text-slate-900"
+                        onClick={(e) => { e.preventDefault() }}
                     >
                         Add
                     </button>
                     <button
                         className="bg-slate-900 p-3 border border-slate-900 font-semibold flex-grow hover:bg-white hover:text-slate-900"
+                        onClick={(e) => { e.preventDefault() }}
                     >
                         Random Data
                     </button>
                     <button
                         className="bg-slate-900 p-3 font-semibold flex-grow hover:bg-white hover:text-slate-900 border border-slate-900"
+                        onClick={(e) => { e.preventDefault() }}
                     >
                         Cancel
                     </button>
