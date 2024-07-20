@@ -1,8 +1,12 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useCartData } from '../../contexts/CartDataContext';
 
 export default function ProductCard({ productDetails }) {
+
+    // Getting required functions from CartData context.
+    const { addItemToCart, removeItemFromCart, isItemInCart } = useCartData();
 
     // Getting product details.
     const productImg = productDetails['image'];
@@ -11,6 +15,20 @@ export default function ProductCard({ productDetails }) {
     const originalPrice = productDetails['originalPrice'];
     const discountPercentage = productDetails['discountPercentage'];
     const discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100));
+
+    // State to check if the product is already in the cart
+    const [isAddedInCart, setIsAddedInCart] = useState(isItemInCart(productName));
+
+    // Handle add/remove from cart.
+    const handleCartAction = () => {
+        if (isAddedInCart) {
+            removeItemFromCart(productName);
+        } else {
+            addItemToCart(productDetails);
+        }
+
+        setIsAddedInCart(preVal => !preVal);
+    };
 
     return (
         <div className="relative p-4 mx-auto w-64 max-w-[70vw] rounded-2xl shadow-product-card-shadow hover:shadow-product-card-shadow-hover duration-300">
@@ -47,8 +65,11 @@ export default function ProductCard({ productDetails }) {
                 </div>
             </Link>
 
-            <button className="bg-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase">
-                Add To Cart
+            <button
+                className="bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300"
+                onClick={handleCartAction}
+            >
+                {isAddedInCart ? 'Remove From Cart' : 'Add To Cart'}
             </button>
         </div>
     );

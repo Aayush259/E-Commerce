@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { ProductDataProvider } from './contexts/ProductDataContext.jsx';
+import { CartDataProvider } from './contexts/CartDataContext.jsx';
 
 library.add(fas, fab);
 
@@ -13,6 +14,9 @@ export default function App() {
 
   // State for product data.
   const [productData, setProductData] = useState([]);
+
+  // State for user cart.
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
 
@@ -32,9 +36,11 @@ export default function App() {
     <>
       <Nav />
       <ProductDataProvider values={{ productData }}>
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
+        <CartDataProvider values={{ cartItems, setCartItems }}>
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+        </CartDataProvider>
       </ProductDataProvider>
     </>
   );
