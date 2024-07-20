@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 export default function ProductCategoryCard({ categoryName, categoryImg }) {
-
     return (
         <NavLink
             to={`/E-Commerce/products/category/${categoryName}`}
@@ -14,4 +14,10 @@ export default function ProductCategoryCard({ categoryName, categoryImg }) {
             </p>
         </NavLink>
     );
+};
+
+// PropTypes checking
+ProductCategoryCard.propTypes = {
+    categoryName: PropTypes.string.isRequired,
+    categoryImg: PropTypes.string.isRequired,
 };

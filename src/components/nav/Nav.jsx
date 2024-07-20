@@ -77,7 +77,7 @@ export default function Nav() {
                 </p>
             </Link>
             <button
-                className="absolute top-0 right-6 z-30 h-full flex flex-col items-center justify-center sm:hover:opacity-75 lg:hidden duration-300"
+                className="absolute top-0 right-6 z-30 h-full flex flex-col items-center justify-center sm:hover:opacity-75 xl:hidden duration-300"
                 onClick={handleHamburgerClick}
             >
                 <div
@@ -92,7 +92,7 @@ export default function Nav() {
             </button>
 
             <div
-                className={`text-white text-lg font-medium sm:text-xl mr-4 flex flex-col items-center lg:flex-row gap-0 lg:gap-8 absolute z-10 left-0 lg:static bg-black w-[100vw] lg:w-fit px-0 lg:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
+                className={`text-white text-lg font-medium sm:text-xl mr-4 flex flex-col items-center xl:flex-row gap-0 xl:gap-8 absolute z-10 left-0 xl:static bg-black w-[100vw] xl:w-fit px-0 xl:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
             >
                 <Search />
                 {

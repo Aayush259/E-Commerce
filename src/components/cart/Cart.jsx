@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useCartData } from '../../contexts/CartDataContext.jsx';
 import CartItem from './CartItem.jsx';
 import PlaceOrderWindow from './PlaceOrderWindow.jsx';
@@ -17,7 +17,7 @@ export default function Cart() {
                     </p>
                 ) : (
                     <div
-                        className="md:flex-row flex items-start justify-between px-5"
+                        className="xl:flex-row flex-col flex xl:items-start items-center justify-between px-5"
                     >
                         <div className="flex flex-col gap-4 my-8">
                             {
@@ -27,7 +27,7 @@ export default function Cart() {
                             }
                         </div>
 
-                        <div className="flex-grow max-w-[40vw]">
+                        <div className="flex-grow lg:max-w-[50vw]">
                             <PlaceOrderWindow />
                         </div>
                     </div>

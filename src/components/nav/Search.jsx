@@ -4,15 +4,20 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Search() {
 
+    // Reference for input element.
     const inputRef = useRef();
+
+    // Navigate function.
     const navigate = useNavigate();
 
+    // This function handles the click on search button.
     const handleSearchBtnClick = () => {
         if (inputRef.current.value) {
             navigate(`/E-Commerce/products/productName/${inputRef.current.value}`);
         }
     };
 
+    // If the search bar is empty, display all products.
     const handleInputChange = () => {
         if (!inputRef.current.value) {
             navigate(`/E-Commerce/products/`);

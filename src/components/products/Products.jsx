@@ -5,7 +5,7 @@ import { useProductData } from '../../contexts/ProductDataContext.jsx';
 import FilterSection from './FilterSection.jsx';
 import Loader from '../Loader.jsx';
 
-export default function Product() {
+export default function Products() {
 
     // Getting productData state from context.
     const { productData } = useProductData();
@@ -95,7 +95,8 @@ export default function Product() {
     return (
         <div className="flex flex-row flex-wrap justify-start items-start relative">
             <FilterSection setFilterCriteria={handleFilterChange} setSortPreference={setSortPreference} setRatingsPreference={setRatingsPreference} />
-            <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4 lg:ml-72 lg:mr-64">
+
+            <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4 mb-24 lg:ml-72 lg:mr-64">
                 {
                     productsToDisplay ? (
 

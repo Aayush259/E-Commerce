@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import AccountNavLink from './AccountNavLink';
+import Loader from '../Loader';
 
 export default function Account() {
     return (
@@ -10,7 +11,9 @@ export default function Account() {
                 <AccountNavLink linkTo={"address"} />
             </div>
 
-            <Outlet />
+            <Suspense fallback={<Loader />}>
+                <Outlet />
+            </Suspense>
         </div>
     );
 }

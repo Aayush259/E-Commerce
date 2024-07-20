@@ -4,6 +4,7 @@ import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
 
 export default function Wishlist() {
 
+    // Getting wishlist items from WishlistData context.
     const { wishlistItems } = useWishlistData();
 
     return (
@@ -14,7 +15,7 @@ export default function Wishlist() {
                         You haven't added anything in the wishlist yet.
                     </p>
                 ) : (
-                    <div>
+                    <div className="flex flex-row flex-wrap justify-start items-start gap-4 w-fit my-8 mx-4">
                         {
                             wishlistItems.map(item => <WishlistItem key={item['name']} item={item} />)
                         }

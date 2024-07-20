@@ -1,25 +1,25 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import App from './App.jsx';
-import Home from './components/home/Home.jsx';
 import './index.css';
-import Product from './components/products/Products.jsx';
-import ProductDetail from './components/products/ProductDetail.jsx';
-import Cart from './components/cart/Cart.jsx';
-import Wishlist from './components/wishlist/Wishlist.jsx';
-import Account from './components/account/Account.jsx';
-import Login from './components/login/Login.jsx';
-import Profile from './components/account/Profile.jsx';
-import Address from './components/account/Address.jsx';
+import App from './App.jsx';
+const Home = lazy(() => import('./components/home/Home.jsx'));
+const Products = lazy(() => import('./components/products/Products.jsx'));
+const ProductDetail = lazy(() => import('./components/products/ProductDetail.jsx'));
+const Cart = lazy(() => import('./components/cart/Cart.jsx'));
+const Wishlist = lazy(() => import('./components/wishlist/Wishlist.jsx'));
+const Account = lazy(() => import('./components/account/Account.jsx'));
+const Profile = lazy(() => import('./components/account/Profile.jsx'));
+const Address = lazy(() => import('./components/account/Address.jsx'));
+const Login = lazy(() => import('./components/login/Login.jsx'));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/E-Commerce" element={<App />}>
       <Route index element={<Home />} />
-      <Route path="products" element={<Product />} />
-      <Route path="products/category/:categoryname" element={<Product />} />
-      <Route path="products/productName/:productname" element={<Product />} />
+      <Route path="products" element={<Products />} />
+      <Route path="products/category/:categoryname" element={<Products />} />
+      <Route path="products/productName/:productname" element={<Products />} />
       <Route path="products/:productname" element={<ProductDetail />} />
       <Route path="cart" element={<Cart />} />
       <Route path="wishlist" element={<Wishlist />} />

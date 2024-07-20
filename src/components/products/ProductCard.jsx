@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCartData } from '../../contexts/CartDataContext.jsx';
@@ -100,4 +101,15 @@ export default function ProductCard({ productDetails }) {
             </button>
         </div>
     );
+};
+
+// PropTypes for ProductCard component
+ProductCard.propTypes = {
+    productDetails: PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        originalPrice: PropTypes.number.isRequired,
+        discountPercentage: PropTypes.number.isRequired
+    }).isRequired
 };

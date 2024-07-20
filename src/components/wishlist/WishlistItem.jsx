@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
 import { Link } from 'react-router-dom';
@@ -88,4 +89,15 @@ export default function WishlistItem({ item }) {
             )}
         </div>
     );
+};
+
+// PropTypes for WishlistItem component
+WishlistItem.propTypes = {
+    item: PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        originalPrice: PropTypes.number.isRequired,
+        rating: PropTypes.number.isRequired,
+        discountPercentage: PropTypes.number.isRequired
+    }).isRequired
 };

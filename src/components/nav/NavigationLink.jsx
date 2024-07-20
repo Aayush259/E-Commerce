@@ -6,7 +6,7 @@ export default function NavigationLink({ linkText, linkTo, setHamActive }) {
     return (
         <NavLink
             to={linkTo}
-            className={`w-full text-center py-3 lg:w-fit lg:py-0 sm:hover:scale-105 duration-300`}
+            className={`w-full text-center py-3 xl:w-fit xl:py-0 sm:hover:scale-105 duration-300`}
             onClick={() => {setHamActive(false)}}
         >
             {linkText}

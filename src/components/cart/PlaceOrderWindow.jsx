@@ -22,7 +22,7 @@ export default function PlaceOrderWindow() {
     }, [cartItems]);
 
     return (
-        <div className="shadow-product-card-shadow overflow-hidden max-w-[90vw] m-auto my-10 rounded-2xl p-6">
+        <div className="shadow-product-card-shadow overflow-hidden max-w-[90vw] w-fit m-auto my-10 rounded-2xl p-6">
 
             <h2 className="text-lg md:text-2xl font-semibold border-b border-slate-900 mb-3">
                 Price Details
