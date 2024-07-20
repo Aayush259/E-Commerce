@@ -10,25 +10,30 @@ import Cart from './components/cart/Cart.jsx';
 import Wishlist from './components/wishlist/Wishlist.jsx';
 import Account from './components/account/Account.jsx';
 import Login from './components/login/Login.jsx';
+import Profile from './components/account/Profile.jsx';
+import Address from './components/account/Address.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/E-Commerce/' element={<App />}>
+    <Route path="/E-Commerce" element={<App />}>
       <Route index element={<Home />} />
-      <Route path='/E-Commerce/products' element={<Product />} />
-      <Route path='/E-Commerce/products/category/:categoryname' element={<Product />} />
-      <Route path='/E-Commerce/products/productName/:productname' element={<Product />} />
-      <Route path='/E-Commerce/products/:productname' element={<ProductDetail />} />
-      <Route path='/E-Commerce/cart' element={<Cart />} />
-      <Route path='/E-Commerce/wishlist' element={<Wishlist />} />
-      <Route path='/E-Commerce/account' element={<Account />} />
-      <Route path='/E-Commerce/login' element={<Login />} />
+      <Route path="products" element={<Product />} />
+      <Route path="products/category/:categoryname" element={<Product />} />
+      <Route path="products/productName/:productname" element={<Product />} />
+      <Route path="products/:productname" element={<ProductDetail />} />
+      <Route path="cart" element={<Cart />} />
+      <Route path="wishlist" element={<Wishlist />} />
+      <Route path="account" element={<Account />}>
+        <Route path="profile" element={<Profile />} />
+        <Route path="address" element={<Address />} />
+      </Route>
+      <Route path="login" element={<Login />} />
     </Route>
   )
 );
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
-  </React.StrictMode>,
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );

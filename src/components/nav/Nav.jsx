@@ -22,7 +22,7 @@ export default function Nav() {
         },
         {
             linkText: 'Account',
-            linkTo: '/E-Commerce/account'
+            linkTo: '/E-Commerce/account/profile'
         },
         {
             linkText: 'Login',
