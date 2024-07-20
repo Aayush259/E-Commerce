@@ -26,7 +26,7 @@ export default function Nav() {
         },
         {
             linkText: 'Login',
-            linkTo: '/E-Commerce.login'
+            linkTo: '/E-Commerce/login'
         },
     ];
 
