@@ -10,7 +10,7 @@ export default function Nav() {
     const navigationLinks = [
         {
             linkText: 'Products',
-            linkTo: '/'
+            linkTo: '/products'
         },
         {
             linkText: 'Wishlist',
@@ -18,7 +18,7 @@ export default function Nav() {
         },
         {
             linkText: 'MyCart',
-            linkTo: '/'
+            linkTo: '/cart'
         },
         {
             linkText: 'Account',
@@ -97,7 +97,7 @@ export default function Nav() {
                 <Search />
                 {
                     navigationLinks.map(link => (
-                        <NavigationLink key={link['linkText']} linkText={link['linkText']} linkTo={link['linkTo']} />
+                        <NavigationLink key={link['linkText']} linkText={link['linkText']} linkTo={link['linkTo']} setHamActive={setHamActive} />
                     ))
                 }
             </div>
