@@ -25,7 +25,7 @@ export default function Login() {
                     ['Login', 'Sign Up'].map((text, index) => (
                         <button
                             key={text}
-                            className={`w-full bg-slate-900 text-white text-lg md:text-xl py-2 border border-slate-900 hover:bg-white hover:text-slate-900 mt-${index === 0 ? '4' : '2'} duration-300`}
+                            className={`w-full bg-slate-900 text-white my-3 text-lg md:text-xl py-2 border border-slate-900 hover:bg-white hover:text-slate-900 mt-${index === 0 ? '4' : '2'} duration-300`}
                             onClick={(e) => e.preventDefault()}
                         >
                             {text}
