@@ -22,7 +22,7 @@ export default function Nav() {
         },
         {
             linkText: 'Account',
-            linkTo: '/'
+            linkTo: '/account'
         },
         {
             linkText: 'Logout',
