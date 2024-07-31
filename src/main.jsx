@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import './index.css';
 import App from './App.jsx';
+import { Provider } from 'react-redux';
+import store from './app/store.js';
 const Home = lazy(() => import('./components/home/Home.jsx'));
 const Products = lazy(() => import('./components/products/Products.jsx'));
 const ProductDetail = lazy(() => import('./components/products/ProductDetail.jsx'));
@@ -34,6 +36,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
