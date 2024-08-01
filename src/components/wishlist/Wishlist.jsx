@@ -1,11 +1,11 @@
 import React from 'react';
-import WishlistItem from './WishlistItem';
-import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
+import WishlistItem from './WishlistItem.jsx';
+import { useWishlistItems } from '../../hooks/useStoreItems.js';
 
 export default function Wishlist() {
 
-    // Getting wishlist items from WishlistData context.
-    const { wishlistItems } = useWishlistData();
+    // Getting wishlist items from state.
+    const wishlistItems = useWishlistItems();
 
     return (
         <div className="flex flex-row flex-wrap justify-start items-start gap-4 w-fit my-8 mx-4">

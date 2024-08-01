@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useCartData } from '../../contexts/CartDataContext.jsx';
+import { useCartItems } from '../../hooks/useStoreItems.js';
 
 export default function PlaceOrderWindow() {
 
-    // Getting cart items from CartData context.
-    const { cartItems } = useCartData();
+    // Getting cart items from store.
+    const cartItems = useCartItems();
 
     // State for total price.
     const [totalPrice, setTotalPrice] = useState(0);

@@ -2,16 +2,23 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCartData } from '../../contexts/CartDataContext.jsx';
-import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
+import useCartActions from '../../hooks/cartReducerHooks.js';
+import { useIsItemInCart, useIsItemInWishlist } from '../../hooks/useStoreItems.js';
+import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
 
 export default function ProductCard({ productDetails }) {
 
-    // Getting required functions from CartData context.
-    const { addItemToCart, removeItemFromCart, isItemInCart } = useCartData();
+    // Getting functions to add and remove items form cart.
+    const { addItemToCart, removeItemFromCart } = useCartActions();
 
-    // Getting required functions from WishlistDataContext.
-    const { addItemToWishlist, removeItemFromWishlist, isItemInWishlist } = useWishlistData();
+    // Getting functions to add and remove items from wishlist.
+    const { addItemToWishlist, removeItemFromWishlist } = useWishlistActions();
+
+    // Function to check whether item is already in cart or not.
+    const isItemInCart = useIsItemInCart();
+
+    // Function to check whether item is already in wishlist or not.
+    const isItemInWishlist = useIsItemInWishlist();
 
     // Getting product details.
     const productImg = productDetails['image'];

@@ -1,12 +1,12 @@
 import React from 'react';
-import { useCartData } from '../../contexts/CartDataContext.jsx';
 import CartItem from './CartItem.jsx';
 import PlaceOrderWindow from './PlaceOrderWindow.jsx';
+import { useCartItems } from '../../hooks/useStoreItems.js';
 
 export default function Cart() {
 
-    // Getting cartItems from CartData context
-    const { cartItems } = useCartData();
+    // Getting cartItems from store.
+    const cartItems = useCartItems();
 
     return (
         <div>

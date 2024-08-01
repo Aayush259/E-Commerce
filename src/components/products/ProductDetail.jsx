@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useProductData } from '../../contexts/ProductDataContext';
 import { useParams } from 'react-router-dom';
-import { useCartData } from '../../contexts/CartDataContext.jsx';
-import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
+import useCartActions from '../../hooks/cartReducerHooks.js';
+import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
+import { useIsItemInCart, useIsItemInWishlist } from '../../hooks/useStoreItems.js';
 import Loader from '../Loader.jsx';
 import Rating from './Rating.jsx';
 
@@ -14,11 +15,17 @@ export default function ProductDetail() {
     // Getting product name from URL.
     const { productname } = useParams();
 
-    // Getting required functions from CartData context.
-    const { addItemToCart, removeItemFromCart, isItemInCart } = useCartData();
+    // Getting functions to manage cart state.
+    const { addItemToCart, removeItemFromCart } = useCartActions();
 
-    // Getting required functions from WishlistDataContext.
-    const { addItemToWishlist, removeItemFromWishlist, isItemInWishlist } = useWishlistData();
+    // Getting functions to manage wishlist state.
+    const { addItemToWishlist, removeItemFromWishlist } = useWishlistActions();
+
+    // Function to check whether the item is already in cart or not.
+    const isItemInCart = useIsItemInCart();
+
+    // Function to check whether the item is already in wishlist or not.
+    const isItemInWishlist = useIsItemInWishlist();
 
     // State for product whose details have to be shown.
     const [productDetails, setProductDetails] = useState(null);

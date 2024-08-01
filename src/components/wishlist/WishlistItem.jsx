@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
 import { Link } from 'react-router-dom';
-import { useCartData } from '../../contexts/CartDataContext.jsx';
+import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
+import useCartActions from '../../hooks/cartReducerHooks.js';
+import { useIsItemInCart } from '../../hooks/useStoreItems.js';
 
 export default function WishlistItem({ item }) {
 
-    // Getting functions from WishlistData context.
-    const { removeItemFromWishlist, moveToCart } = useWishlistData();
+    // Getting functions to manage cart and wishlist.
+    const { addItemToCart } = useCartActions();
+    const { removeItemFromWishlist } = useWishlistActions();
 
-    // Getting functions from CartData context.
-    const { isItemInCart } = useCartData();
+    // Function to check whether item is already in cart or not.
+    const isItemInCart = useIsItemInCart();
 
     // Getting item details.
     const itemImage = item['image'];
@@ -82,7 +84,7 @@ export default function WishlistItem({ item }) {
             ) : (
                 <button
                     className="bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300"
-                    onClick={() => { moveToCart(item) }}
+                    onClick={() => { addItemToCart(item) }}
                 >
                     Move to Cart
                 </button>

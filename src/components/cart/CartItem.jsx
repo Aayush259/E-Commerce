@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCartData } from '../../contexts/CartDataContext.jsx';
-import { useWishlistData } from '../../contexts/WishlistDataContext.jsx';
+import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
+import { useIsItemInWishlist } from '../../hooks/useStoreItems.js';
+import useCartActions from '../../hooks/cartReducerHooks.js';
 
 export default function CartItem({ item }) {
 
-    // Getting functions from CartData context.
-    const { removeItemFromCart, incrementItemCount, decrementItemCount } = useCartData();
+    // Getting functions to manage cart.
+    const { removeItemFromCart, incrementItemCount, decrementItemCount } = useCartActions();
 
-    // Getting functions from WishlistData context.
-    const { addItemToWishlist, removeItemFromWishlist, isItemInWishlist } = useWishlistData();
+    // Getting functions to manage wishlist.
+    const { addItemToWishlist, removeItemFromWishlist } = useWishlistActions();
+    
+    // Function to know whether item is already in wishlist.
+    const isItemInWishlist = useIsItemInWishlist();
 
     // Getting item details.
     const { image: itemImage, name: itemName, originalPrice: itemPrice, discountPercentage, count: itemQuantity } = item;
@@ -96,4 +100,4 @@ export default function CartItem({ item }) {
             </div>
         </div>
     );
-}
+};
