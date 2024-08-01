@@ -1,9 +1,11 @@
 
-// Function to add item in cart.
+// Reducer to add item in cart state.
 const addItemToCart = (state, action) => {
 
+    // Getting item index.
     const itemIndex = state.value.findIndex(item => item.name === action.payload.name);
 
+    // If item index is already in store, increase its count, else add it.
     if (itemIndex !== -1) {
         state.value[itemIndex].count += 1;
     } else {
@@ -11,12 +13,12 @@ const addItemToCart = (state, action) => {
     }
 };
 
-// Function to remove item from cart.
+// Reducer to remove item from cart state.
 const removeItemFromCart = (state, action) => {
-    state.value = state.filter(item => item.name !== action.payload);
+    state.value = state.value.filter(item => item.name !== action.payload);
 };
 
-// Function to increment item count.
+// Reducer to increment item count in cart state.
 const incrementCount = (state, action) => {
     const item = state.value.find(item => item.name === action.payload);
 
@@ -25,7 +27,7 @@ const incrementCount = (state, action) => {
     }
 };
 
-// Function to decrement item count.
+// Reducer to decrement item count in cart state.
 const decrementCount = (state, action) => {
     const item = state.value.find(item => item.name === action.payload);
 
