@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCategoryCard from './ProductCategoryCard';
+import ProductCategoryCard from './ProductCategoryCard.jsx';
 import wiredImg from '../../images/product-category-images/wired-ear-buds.jpg';
 import wirelessImg from '../../images/product-category-images/wireless-ear-buds.png';
 import noiseCancellingImg from '../../images/product-category-images/headphone.jpg';

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 import { useParams } from 'react-router-dom';
-import { useProductData } from '../../contexts/ProductDataContext.jsx';
+import { useProducts } from '../../hooks/useStoreItems.js';
 import FilterSection from './FilterSection.jsx';
 import Loader from '../Loader.jsx';
 
 export default function Products() {
 
-    // Getting productData state from context.
-    const { productData } = useProductData();
+    // Getting product data from store.
+    const productData = useProducts();
 
     // Getting category and product name from URL.
     const { categoryname, productname } = useParams();

@@ -8,10 +8,14 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { ProductDataProvider } from './contexts/ProductDataContext.jsx';
 import { CartDataProvider } from './contexts/CartDataContext.jsx';
 import { WishlistDataProvider } from './contexts/WishlistDataContext.jsx';
+import { useDispatch } from 'react-redux';
+import { addProducts } from './features/product/productSlice.js';
 
 library.add(fas, fab);
 
 export default function App() {
+
+  const dispatch = useDispatch();
 
   // State for product data.
   const [productData, setProductData] = useState([]);
@@ -20,7 +24,7 @@ export default function App() {
 
     fetch('/E-Commerce/data.json')
       .then(response => response.json())
-      .then(data => setProductData(data))
+      .then(data => dispatch(addProducts(data)))
       .catch(err => console.log(err))
 
   }, []);
@@ -28,7 +32,7 @@ export default function App() {
   useEffect(() => {
     document.body.classList.add('w-[100vw]');
     document.body.classList.add('overflow-x-hidden');
-  })
+  }, []);
 
   return (
     <>
