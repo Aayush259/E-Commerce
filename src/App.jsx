@@ -5,9 +5,6 @@ import { Outlet } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { ProductDataProvider } from './contexts/ProductDataContext.jsx';
-import { CartDataProvider } from './contexts/CartDataContext.jsx';
-import { WishlistDataProvider } from './contexts/WishlistDataContext.jsx';
 import { useDispatch } from 'react-redux';
 import { addProducts } from './features/product/productSlice.js';
 
@@ -16,9 +13,6 @@ library.add(fas, fab);
 export default function App() {
 
   const dispatch = useDispatch();
-
-  // State for product data.
-  const [productData, setProductData] = useState([]);
 
   useEffect(() => {
 
@@ -37,15 +31,9 @@ export default function App() {
   return (
     <>
       <Nav />
-      <ProductDataProvider values={{ productData }}>
-        <CartDataProvider>
-          <WishlistDataProvider>
-            <Suspense fallback={<Loader />}>
-              <Outlet />
-            </Suspense>
-          </WishlistDataProvider>
-        </CartDataProvider>
-      </ProductDataProvider>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
