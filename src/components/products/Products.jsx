@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';
+import ProductCard from './ProductCard.jsx';
 import { useParams } from 'react-router-dom';
 import { useProducts } from '../../hooks/useStoreItems.js';
 import FilterSection from './FilterSection.jsx';

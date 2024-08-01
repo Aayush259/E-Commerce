@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import AccountNavLink from './AccountNavLink';
-import Loader from '../Loader';
+import AccountNavLink from './AccountNavLink.jsx';
+import Loader from '../Loader.jsx';
 
 export default function Account() {
     return (

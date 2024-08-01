@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import Nav from './components/nav/Nav.jsx';
 import Loader from './components/Loader.jsx';
 import { Outlet } from 'react-router-dom';
