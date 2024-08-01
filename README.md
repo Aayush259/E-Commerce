@@ -15,8 +15,8 @@ This is a frontend-only ecommerce e-commerce application which provides a seamle
 
 - Vite + React
 - React Router DOM
+- Redux Toolkit
 - Tailwind CSS 🌈
-- Context API
 
 ## 🖼️ Screenshots
 
