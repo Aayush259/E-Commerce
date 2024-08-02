@@ -3,10 +3,14 @@ import { useParams } from 'react-router-dom';
 import useCartActions from '../../hooks/cartReducerHooks.js';
 import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
 import { useIsItemInCart, useIsItemInWishlist, useProducts } from '../../hooks/useStoreItems.js';
+import useGetProducts from '../../hooks/useGetProducts.js';
 import Loader from '../Loader.jsx';
 import Rating from './Rating.jsx';
 
 export default function ProductDetail() {
+
+    // Getting products in store if not exists.
+    useGetProducts();
 
     // Getting product data from store.
     const productData = useProducts();

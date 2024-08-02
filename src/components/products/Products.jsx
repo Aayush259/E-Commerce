@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard.jsx';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../features/product/productSlice.js';
+import { useSelector } from 'react-redux';
+import StatusCode from '../../utils/StatusCode.js';
+import useGetProducts from '../../hooks/useGetProducts.js';
 import FilterSection from './FilterSection.jsx';
 import Loader from '../Loader.jsx';
-import StatusCode from '../../utils/StatusCode.js';
 
 export default function Products() {
 
-    const dispatch = useDispatch();
+    // Getting products in store.
+    useGetProducts();
 
     // Getting product data and status from store.
     const { value: productData, status } = useSelector(state => state.product);
@@ -24,11 +25,6 @@ export default function Products() {
     const [filterCriteria, setFilterCriteria] = useState([
         'Wired', 'Noise Cancelling', 'Wireless', 'Speaker'
     ]);
-
-    // Dispatching action to get products.
-    useEffect(() => {
-        dispatch(getProducts());
-    }, []);
 
     useEffect(() => {
         if (filterCriteria.length <= 0) {
