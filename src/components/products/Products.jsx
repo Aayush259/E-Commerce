@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard.jsx';
 import { useParams } from 'react-router-dom';
-import { useProducts } from '../../hooks/useStoreItems.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../../features/product/productSlice.js';
 import FilterSection from './FilterSection.jsx';
 import Loader from '../Loader.jsx';
+import StatusCode from '../../utils/StatusCode.js';
 
 export default function Products() {
 
-    // Getting product data from store.
-    const productData = useProducts();
+    const dispatch = useDispatch();
+
+    // Getting product data and status from store.
+    const { value: productData, status } = useSelector(state => state.product);
 
     // Getting category and product name from URL.
     const { categoryname, productname } = useParams();
@@ -20,6 +24,11 @@ export default function Products() {
     const [filterCriteria, setFilterCriteria] = useState([
         'Wired', 'Noise Cancelling', 'Wireless', 'Speaker'
     ]);
+
+    // Dispatching action to get products.
+    useEffect(() => {
+        dispatch(getProducts());
+    }, []);
 
     useEffect(() => {
         if (filterCriteria.length <= 0) {
@@ -92,27 +101,38 @@ export default function Products() {
 
     }, [categoryname, productname, productData, filterCriteria, sortPreference, ratingsPreference]);
 
+    // If status is loading, display loader.
+    if (status === StatusCode.LOADING) {
+        return <Loader />
+    };
+
+    // If status is error, show error message.
+    if (status === StatusCode.ERROR) {
+        return <p
+            className="text-xl md:text-3xl text-center my-8 text-red-500"
+        >
+            Something went wrong!!!
+        </p>
+    };
+
     return (
         <div className="flex flex-row flex-wrap justify-start items-start relative">
             <FilterSection setFilterCriteria={handleFilterChange} setSortPreference={setSortPreference} setRatingsPreference={setRatingsPreference} />
 
             <div className="flex flex-row justify-start items-center flex-wrap gap-4 mx-8 my-4 mb-24 lg:ml-72 lg:mr-64">
                 {
-                    productsToDisplay ? (
 
-                        productsToDisplay.length <= 0 ? (
-                            <p
-                                className="text-xl md:text-3xl text-center my-8"
-                            >
-                                No items found for that...
-                            </p>
-                        ) : (
-                            productsToDisplay.map(product => (
-                                <ProductCard key={product['name']} productDetails={product} />
-                            ))
-                        )
-
-                    ) : <Loader />
+                    productsToDisplay.length <= 0 ? (
+                        <p
+                            className="text-xl md:text-3xl text-center my-8"
+                        >
+                            No items found for that...
+                        </p>
+                    ) : (
+                        productsToDisplay.map(product => (
+                            <ProductCard key={product['name']} productDetails={product} />
+                        ))
+                    )
                 }
             </div>
         </div>

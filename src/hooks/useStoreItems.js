@@ -1,8 +1,5 @@
 import { useSelector } from 'react-redux';
 
-// Custom hook to use product state from store.
-const useProducts = () => useSelector(state => state.product.value);
-
 // Custom hook to use cart state from store.
 const useCartItems = () => useSelector(state => state.cart.value);
 
@@ -23,4 +20,4 @@ const useIsItemInWishlist = () => (itemName) => {
     return wishlistItems.some(item => item.name === itemName);
 };
 
-export { useProducts, useCartItems, useWishlistItems, useIsItemInCart, useIsItemInWishlist };
+export { useCartItems, useWishlistItems, useIsItemInCart, useIsItemInWishlist };
