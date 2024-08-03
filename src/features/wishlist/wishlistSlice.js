@@ -5,7 +5,7 @@ import {
 } from './wishlistReducers';
 
 const initialState = {
-    value: [],
+    value: JSON.parse(localStorage.getItem('wishlist')) || [],
 };
 
 const wishlistSlice = createSlice({
