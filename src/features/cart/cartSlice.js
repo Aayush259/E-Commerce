@@ -7,7 +7,7 @@ import {
 } from './cartReducers.js';
 
 const initialState = {
-    value: [],
+    value: JSON.parse(localStorage.getItem('cart')) || [],
 };
 
 const cartSlice = createSlice({
