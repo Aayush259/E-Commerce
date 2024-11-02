@@ -23,7 +23,7 @@ export default function Login() {
 
         if (res.ok) {
             navigate('/E-Commerce/products');
-            dispatch(setUser({ isLoggedIn: true, user: res.data.user }));
+            dispatch(setUser({ id: res.data.user._id, name: res.data.user.name, email: res.data.user.email }));
         }
     };
 

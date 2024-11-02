@@ -19,8 +19,6 @@ export default function Signup() {
 
         const res = await signup(data.name, data.email, data.password);
 
-        console.log(res);
-
         if (res.ok) {
             navigate('/E-Commerce/login');
         }
