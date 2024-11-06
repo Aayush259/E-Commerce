@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    @apply w-screen overflow-x-hidden;
+}
+
+::-webkit-scrollbar {
+    @apply w-2;
+}
+  
+::-webkit-scrollbar-track {
+    @apply shadow bg-indigo-400;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-indigo-900 rounded-lg hover:bg-indigo-950 transition-all duration-200;
+}
