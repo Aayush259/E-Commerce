@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://e-commerce-backend-hiso.onrender.com";
+const API_URL = "http://localhost:5000";
 
 // Set access token in local storage.
 const setAccessToken = (accessToken) => {
@@ -17,21 +17,6 @@ const removeAccessToken = () => {
     localStorage.removeItem("accessToken");
 };
 
-// Set user in local storage.
-const setUser = (user) => {
-    localStorage.setItem("user", JSON.stringify(user));
-};
-
-// Remove user from local storage.
-const removeUser = () => {
-    localStorage.removeItem("user");
-};
-
-// Get user from local storage.
-export const getUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
-};
-
 // Signup user.
 export const signup = async (name, email, password) => {
     try {
@@ -45,24 +30,46 @@ export const signup = async (name, email, password) => {
 // Login user.
 export const login = async (email, password) => {
     try {
-        const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+        const response = await axios.post(`${API_URL}/auth/login`, { email, password }, { withCredentials: true });
         const { accessToken } = response.data;
         setAccessToken(accessToken);
-        setUser({_id: response.data.user._id, name: response.data.user.name, email: response.data.user.email});
         return { ok: true, data: response.data };
     } catch (error) {
         throw { ok: false, data: error.response.data };
     }
 };
 
+export const getUser = async () => {
+    const accessToken = getAccessToken();
+
+    if (!accessToken) return false;
+
+    try {
+        const response = await axios.get(
+            `${API_URL}/auth/user`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }
+        )
+
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 // Logout user.
 export const logout = async (id) => {
     try {
         await axios.post(`${API_URL}/auth/logout`, { id });
-        removeAccessToken();
-        removeUser();
     } catch (error) {
         throw error.response.data;
+    } finally {
+        removeAccessToken();
     }
 }
 
@@ -71,10 +78,9 @@ export const refreshAccessToken = async () => {
     try {
         const response = await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });
         setAccessToken(response.data.accessToken);
-        return response.data;
+        return response.data.accessToken;
     } catch (error) {
-        removeAccessToken();
-        removeUser();
-        throw error.response.data;
+        await logout();
+        throw error.response.message;
     }
 };
