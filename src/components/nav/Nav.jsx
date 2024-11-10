@@ -3,8 +3,11 @@ import appLogo from '../../images/app-logo.jpg';
 import { Link } from 'react-router-dom';
 import NavigationLink from './NavigationLink.jsx';
 import Search from './Search.jsx';
+import { useUser } from '../../hooks/useStoreItems.js';
 
 export default function Nav() {
+
+    const { isLoggedIn } = useUser();
 
     // Array of navigation links text and their links.
     const navigationLinks = [
@@ -21,12 +24,8 @@ export default function Nav() {
             linkTo: '/E-Commerce/cart'
         },
         {
-            linkText: 'Account',
-            linkTo: '/E-Commerce/account/profile'
-        },
-        {
-            linkText: 'Login',
-            linkTo: '/E-Commerce/login'
+            linkText: isLoggedIn ? 'Account' : 'Login',
+            linkTo: isLoggedIn ? '/E-Commerce/account/profile' : '/E-Commerce/login'
         },
     ];
 
