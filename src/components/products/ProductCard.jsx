@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useCartActions from '../../hooks/cartReducerHooks.js';
-import { useIsItemInCart, useIsItemInWishlist } from '../../hooks/useStoreItems.js';
-import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
+import { useIsItemInCart, useIsItemInWishlist, useUser } from '../../hooks/useStoreItems.js';
+import { addToCart, addToWishlist, removeFromCart, removeFromWishlist } from '../../app/product.js';
+import { addProductIdToCart, addProductIdToWishlist, removeProductIdFromCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
+import { useDispatch } from 'react-redux';
 
 export default function ProductCard({ productDetails }) {
 
-    // Getting functions to add and remove items form cart.
-    const { addItemToCart, removeItemFromCart } = useCartActions();
+    const { user, isLoggedIn } = useUser();
 
-    // Getting functions to add and remove items from wishlist.
-    const { addItemToWishlist, removeItemFromWishlist } = useWishlistActions();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     // Function to check whether item is already in cart or not.
     const isItemInCart = useIsItemInCart();
@@ -21,6 +21,7 @@ export default function ProductCard({ productDetails }) {
     const isItemInWishlist = useIsItemInWishlist();
 
     // Getting product details.
+    const productId = productDetails['_id'];
     const productImg = productDetails['image'];
     const productName = productDetails['name'];
     const rating = productDetails['rating'];
@@ -28,40 +29,83 @@ export default function ProductCard({ productDetails }) {
     const discountPercentage = productDetails['discountPercentage'];
     const discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100));
 
-    // State to check if the product is already in the cart
-    const [isAddedInCart, setIsAddedInCart] = useState(isItemInCart(productName));
+    // State to check if the product is already in the cart or adding to cart.
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const [isAddedInCart, setIsAddedInCart] = useState(isItemInCart(productId));
 
-    // State to check if the product is already in the wishlist.
-    const [isAddedInWishlist, setIsAddedInWishlist] = useState(isItemInWishlist(productName));
+    // State to check if the product is already in the wishlist or adding to wishlist.
+    const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
+    const [isAddedInWishlist, setIsAddedInWishlist] = useState(isItemInWishlist(productId));
 
     // Handle add/remove from cart.
-    const handleCartAction = () => {
-        if (isAddedInCart) {
-            removeItemFromCart(productName);
-        } else {
-            addItemToCart(productDetails);
+    const handleCartAction = async () => {
+        // If user is not logged in, redirect to login page.
+        if (!isLoggedIn) {
+            navigate("/E-Commerce/login")
+            return;
         };
 
-        setIsAddedInCart(preVal => !preVal);
+        setIsAddingToCart(true);
+
+        if (isAddedInCart) {
+            try {
+                await removeFromCart(productId);
+                dispatch(removeProductIdFromCart(productId));
+                setIsAddedInCart(false);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
+        } else {
+            try {
+                await addToCart(productId);
+                dispatch(addProductIdToCart(productId));
+                setIsAddedInCart(true);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
+        };
+
+        setIsAddingToCart(false);
     };
 
     // Handle add/remove from wishlist.
-    const handleWishlistAction = () => {
-        if (isAddedInWishlist) {
-            removeItemFromWishlist(productName);
-        } else {
-            addItemToWishlist(productDetails);
+    const handleWishlistAction = async () => {
+        // If user is not logged in, redirect to login page.
+        if (!isLoggedIn) {
+            navigate("/E-Commerce/login")
+            return;
         };
 
-        setIsAddedInWishlist(preVal => !preVal);
+        setIsAddingToWishlist(true);
+
+        if (isAddedInWishlist) {
+            try {
+                await removeFromWishlist(productId);
+                dispatch(removeProductIdFromWishlist(productId));
+                setIsAddedInWishlist(false);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
+        } else {
+            try {
+                await addToWishlist(productId);
+                dispatch(addProductIdToWishlist(productId));
+                setIsAddedInWishlist(true);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
+        };
+
+        setIsAddingToWishlist(false);
     };
 
     return (
         <div className="relative p-4 mx-auto w-64 max-w-[70vw] rounded-2xl shadow-product-card-shadow hover:shadow-product-card-shadow-hover duration-300">
 
             <button
-                className="absolute top-0 right-0 m-2"
+                className={`absolute top-0 right-0 m-2 ${isAddingToWishlist ? "opacity-50" : "opacity-100"}`}
                 onClick={handleWishlistAction}
+                disabled={isAddingToWishlist}
             >
                 <FontAwesomeIcon
                     icon="fa-solid fa-heart"
@@ -72,7 +116,7 @@ export default function ProductCard({ productDetails }) {
                 />
             </button>
 
-                <Link to={`/E-Commerce/products/${productName}`}>
+            <Link to={`/E-Commerce/products/${productName}`}>
                 <img src={productImg} alt={productName} className="block m-auto h-60" />
 
                 <div className="flex flex-row items-start justify-between my-4">
@@ -101,8 +145,9 @@ export default function ProductCard({ productDetails }) {
             </Link>
 
             <button
-                className="bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300"
+                className={`bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300 ${isAddingToCart ? "opacity-50" : "opacity-100"}`}
                 onClick={handleCartAction}
+                disabled={isAddingToCart}
             >
                 {isAddedInCart ? 'Remove From Cart' : 'Add To Cart'}
             </button>
