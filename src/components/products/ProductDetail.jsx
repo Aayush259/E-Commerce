@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useCartActions from '../../hooks/cartReducerHooks.js';
-import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
-import { useIsItemInCart, useIsItemInWishlist, useProducts } from '../../hooks/useStoreItems.js';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useIsItemInCart, useIsItemInWishlist, useProducts, useUser } from '../../hooks/useStoreItems.js';
 import useGetProducts from '../../hooks/useGetProducts.js';
 import Loader from '../Loader.jsx';
 import Rating from './Rating.jsx';
+import { useDispatch } from 'react-redux';
+import { addToCart, addToWishlist, removeFromCart, removeFromWishlist } from '../../app/product.js';
+import { addProductIdToCart, addProductIdToWishlist, removeProductIdFromCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
 
 export default function ProductDetail() {
+
+    const { user, isLoggedIn } = useUser();
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     // Getting products in store if not exists.
     useGetProducts();
@@ -18,12 +24,6 @@ export default function ProductDetail() {
     // Getting product name from URL.
     const { productname } = useParams();
 
-    // Getting functions to manage cart state.
-    const { addItemToCart, removeItemFromCart } = useCartActions();
-
-    // Getting functions to manage wishlist state.
-    const { addItemToWishlist, removeItemFromWishlist } = useWishlistActions();
-
     // Function to check whether the item is already in cart or not.
     const isItemInCart = useIsItemInCart();
 
@@ -33,11 +33,20 @@ export default function ProductDetail() {
     // State for product whose details have to be shown.
     const [productDetails, setProductDetails] = useState(null);
 
-    // State to check if the product is already in the cart
-    const [isAddedInCart, setIsAddedInCart] = useState(isItemInCart(productname));
+    // State to check if the product is already in the cart or adding to cart.
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const [isAddedInCart, setIsAddedInCart] = useState(false);
 
-    // State to check if the product is already in the wishlist.
-    const [isAddedInWishlist, setIsAddedInWishlist] = useState(isItemInWishlist(productname));
+    // State to check if the product is already in the wishlist or adding to wishlist.
+    const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
+    const [isAddedInWishlist, setIsAddedInWishlist] = useState(false);
+
+    useEffect(() => {
+        if (isLoggedIn && productData && productDetails) {
+            setIsAddedInCart(user.cart.some(cartProdId => cartProdId === productDetails['_id']));
+            setIsAddedInWishlist(user.wishlist.some(wishlistProdId => wishlistProdId === productDetails['_id']));
+        }
+    }, [productData, user, productDetails]);
 
     // Getting all product details from productData.
     useEffect(() => {
@@ -47,25 +56,69 @@ export default function ProductDetail() {
     }, [productData]);
 
     // Handle add/remove from cart.
-    const handleCartAction = () => {
+    const handleCartAction = async () => {
+        // If user is not logged in, redirect to login page.
+        if (!isLoggedIn) {
+            navigate("/E-Commerce/login")
+            return;
+        }
+
+        setIsAddingToCart(true);
+
+        const productId = productDetails['_id'];
+
         if (isAddedInCart) {
-            removeItemFromCart(productname);
+            try {
+                await removeFromCart(productId);
+                dispatch(removeProductIdFromCart(productId));
+                setIsAddedInCart(false);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
         } else {
-            addItemToCart(productDetails);
+            try {
+                await addToCart(productId);
+                dispatch(addProductIdToCart(productId));
+                setIsAddedInCart(true);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
         };
 
-        setIsAddedInCart(preVal => !preVal);
+        setIsAddingToCart(false);
     };
 
     // Handle add/remove from wishlist.
-    const handleWishlistAction = () => {
+    const handleWishlistAction = async () => {
+        // If user is not logged in, redirect to login page.
+        if (!isLoggedIn) {
+            navigate("/E-Commerce/login")
+            return;
+        }
+
+        setIsAddingToWishlist(true);
+
+        const productId = productDetails['_id'];
+
         if (isAddedInWishlist) {
-            removeItemFromWishlist(productname);
+            try {
+                await removeFromWishlist(productId);
+                dispatch(removeProductIdFromWishlist(productId));
+                setIsAddedInWishlist(false);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
         } else {
-            addItemToWishlist(productDetails);
+            try {
+                await addToWishlist(productId);
+                dispatch(addProductIdToWishlist(productId));
+                setIsAddedInWishlist(true);
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
         };
 
-        setIsAddedInWishlist(preVal => !preVal);
+        setIsAddingToWishlist(false);
     };
 
     return (
@@ -112,8 +165,9 @@ export default function ProductDetail() {
                             <div className="flex flex-row flex-wrap w-full items-center justify-center gap-4 text-lg mt-5 pb-2 border-b border-slate-800">
 
                                 <button
-                                    className="flex-grow bg-slate-900 text-white hover:bg-white hover:text-slate-900 duration-300 py-3 px-1 border-2 border-slate-900 uppercase"
+                                    className={`flex-grow bg-slate-900 text-white hover:bg-white hover:text-slate-900 duration-300 py-3 px-1 border-2 border-slate-900 uppercase ${isAddingToCart ? "opacity-50" : "opacity-100"}`}
                                     onClick={handleCartAction}
+                                    disabled={isAddingToCart}
                                 >
                                     {
                                         isAddedInCart ? 'Remove From Cart' : 'Add To Cart'
@@ -121,8 +175,9 @@ export default function ProductDetail() {
                                 </button>
 
                                 <button
-                                    className="flex-grow bg-white text-slate-900 hover:bg-slate-900 hover:text-white duration-300 py-3 px-1 border-2 border-slate-900 uppercase"
+                                    className={`flex-grow bg-white text-slate-900 hover:bg-slate-900 hover:text-white duration-300 py-3 px-1 border-2 border-slate-900 uppercase ${isAddingToWishlist ? "opacity-50" : "opacity-100"}`}
                                     onClick={handleWishlistAction}
+                                    disabled={isAddingToWishlist}
                                 >
                                     {
                                         isAddedInWishlist ? 'Remove From Wishlist' : 'Add To Wishlist'
