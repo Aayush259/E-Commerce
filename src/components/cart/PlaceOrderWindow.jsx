@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useCartItems } from '../../hooks/useStoreItems.js';
 
-export default function PlaceOrderWindow() {
-
-    // Getting cart items from store.
-    const cartItems = useCartItems();
+export default function PlaceOrderWindow({ cartItems, setOrderPlaced }) {
 
     // State for total price.
     const [totalPrice, setTotalPrice] = useState(0);
@@ -22,7 +18,7 @@ export default function PlaceOrderWindow() {
     }, [cartItems]);
 
     return (
-        <div className="shadow-product-card-shadow overflow-hidden max-w-[90vw] w-fit m-auto my-10 rounded-2xl p-6">
+        <div className="shadow-product-card-shadow bg-white overflow-hidden max-w-[90vw] w-full m-auto my-10 rounded-2xl p-6">
 
             <h2 className="text-lg md:text-2xl font-semibold border-b border-slate-900 mb-3">
                 Price Details
@@ -57,7 +53,7 @@ export default function PlaceOrderWindow() {
                 </span>
             </p>
 
-            <button className="font-semibold text-lg md:text-xl w-full mt-6 bg-yellow-600 text-white p-3 rounded-lg">
+            <button className="font-semibold text-lg md:text-xl w-full mt-6 bg-yellow-600 text-white p-3 rounded-lg" onClick={() => setOrderPlaced(true)}>
                 Place Order
             </button>
         </div>
