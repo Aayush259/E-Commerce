@@ -1,45 +1,83 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
 import { useIsItemInWishlist } from '../../hooks/useStoreItems.js';
-import useCartActions from '../../hooks/cartReducerHooks.js';
+import { addToWishlist, removeFromCart, removeFromWishlist } from '../../app/product.js';
+import { useDispatch } from 'react-redux';
+import { addProductIdToWishlist, removeProductIdFromCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, incrementItemCount, decrementItemCount }) {
 
-    // Getting functions to manage cart.
-    const { removeItemFromCart, incrementItemCount, decrementItemCount } = useCartActions();
+    const dispatch = useDispatch();
 
-    // Getting functions to manage wishlist.
-    const { addItemToWishlist, removeItemFromWishlist } = useWishlistActions();
-    
+    // const [count, setCount] = useState(1);
+
+    const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
+    const [isRemovingFromCart, setIsRemovingFromCart] = useState(false);
+
     // Function to know whether item is already in wishlist.
     const isItemInWishlist = useIsItemInWishlist();
 
     // Getting item details.
-    const { image: itemImage, name: itemName, originalPrice: itemPrice, discountPercentage, count: itemQuantity } = item;
+    const { _id: itemId, count, image: itemImage, name: itemName, originalPrice: itemPrice, discountPercentage } = item;
 
     const discountPrice = itemPrice - (itemPrice * (discountPercentage / 100));
 
-    // If item quantity is zero, remove it from cart.
-    useEffect(() => {
-        if (itemQuantity <= 0) {
-            removeItemFromCart(itemName);
-        }
-    }, [itemQuantity, removeItemFromCart, itemName]);
-
     // Check if the item is in the wishlist
-    const inWishlist = isItemInWishlist(itemName);
+    const inWishlist = isItemInWishlist(itemId);
+
+    useEffect(() => {
+        if (count <= 0) {
+            handleCartAction();
+        }
+    }, [count, item]);
+
+    const handleWishlistAction = async () => {
+        if (isAddingToWishlist) return;
+        setIsAddingToWishlist(true);
+        if (inWishlist) {
+            try {
+                await removeFromWishlist(itemId);
+                dispatch(removeProductIdFromWishlist(itemId));
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
+        } else {
+            try {
+                await addToWishlist(itemId);
+                dispatch(addProductIdToWishlist(itemId));
+            } catch (error) {
+                // Todo: Add toaster notification.
+            }
+        }
+
+        setIsAddingToWishlist(false);
+    }
+
+    const handleCartAction = async () => {
+        if (isRemovingFromCart) return;
+        setIsRemovingFromCart(true);
+
+        try {
+            await removeFromCart(itemId);
+            dispatch(removeProductIdFromCart(itemId));
+        } catch (error) {
+            // Todo: Add toaster notification.
+        }
+        setIsRemovingFromCart(false);
+    }
 
     const actionButtons = [
         {
             text: "Remove From Cart",
-            onClick: () => removeItemFromCart(itemName),
-            classes: "bg-slate-900 text-white hover:bg-white hover:text-slate-900",
+            onClick: handleCartAction,
+            classes: `bg-slate-900 text-white hover:bg-white hover:text-slate-900 ${isRemovingFromCart ? "opacity-50" : "opacity-100"}`,
+            disabled: isRemovingFromCart,
         },
         {
             text: inWishlist ? "Remove from Wishlist" : "Add to Wishlist",
-            onClick: () => inWishlist ? removeItemFromWishlist(itemName) : addItemToWishlist(item),
-            classes: "bg-white text-slate-900 hover:bg-slate-900 hover:text-white",
+            onClick: handleWishlistAction,
+            classes: `bg-white text-slate-900 hover:bg-slate-900 hover:text-white min-w-none md:min-w-[253px] ${isAddingToWishlist ? "opacity-50" : "opacity-100"}`,
+            disabled: isAddingToWishlist,
         }
     ];
 
@@ -64,20 +102,26 @@ export default function CartItem({ item }) {
                     <div className="flex flex-row items-center justify-center gap-0">
                         <button
                             className="hover:opacity-75"
-                            onClick={() => decrementItemCount(itemName)}
+                            onClick={() => decrementItemCount(itemId)}
                         >
-                            <FontAwesomeIcon icon="fa-solid fa-minus" className="text-white bg-black rounded-full h-4 w-4 p-[1.5px]" />
+                            <FontAwesomeIcon
+                                icon="fa-solid fa-minus"
+                                className="text-white bg-black rounded-full h-4 w-4 p-[1.5px]"
+                            />
                         </button>
 
                         <span className="mx-2">
-                            {itemQuantity}
+                            {count}
                         </span>
 
                         <button
                             className="hover:opacity-75"
-                            onClick={() => incrementItemCount(itemName)}
+                            onClick={() => incrementItemCount(itemId)}
                         >
-                            <FontAwesomeIcon icon="fa-solid fa-plus" className="text-white bg-black rounded-full h-4 w-4 p-[1.5px]" />
+                            <FontAwesomeIcon
+                                icon="fa-solid fa-plus"
+                                className="text-white bg-black rounded-full h-4 w-4 p-[1.5px]"
+                            />
                         </button>
                     </div>
                 </div>
@@ -86,11 +130,12 @@ export default function CartItem({ item }) {
                     className="flex flex-row flex-wrap w-full items-center justify-center gap-4 mt-5 pb-2"
                 >
                     {
-                        actionButtons.map(({ text, onClick, classes }, index) => (
+                        actionButtons.map(({ text, onClick, classes, disabled }, index) => (
                             <button
                                 key={index}
                                 className={`flex-grow py-3 px-2 border-2 border-slate-900 uppercase duration-300 ${classes}`}
                                 onClick={onClick}
+                                disabled={disabled}
                             >
                                 {text}
                             </button>
