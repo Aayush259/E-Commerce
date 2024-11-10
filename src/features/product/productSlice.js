@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import StatusCode from '../../utils/StatusCode';
+import { fetchProducts } from '../../app/product';
 
 const initialState = {
     value: [],
@@ -25,9 +26,11 @@ const productSlice = createSlice({
 });
 
 export const getProducts = createAsyncThunk('product/get', async () => {
-    const data = await fetch('/E-Commerce/data.json')
-    const response = await data.json();
-    return response;
+    // const data = await fetch('/E-Commerce/data.json')
+    // const response = await data.json();
+    // return response;
+    const products = await fetchProducts();
+    return products.data;
 });
 
 export default productSlice.reducer;
