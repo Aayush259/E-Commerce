@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
-import useWishlistActions from '../../hooks/wishlistReducerHooks.js';
-import useCartActions from '../../hooks/cartReducerHooks.js';
 import { useIsItemInCart } from '../../hooks/useStoreItems.js';
+import { addToCart, removeFromWishlist } from '../../app/product.js';
+import { useDispatch } from 'react-redux';
+import { addProductIdToCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
 
 export default function WishlistItem({ item }) {
 
-    // Getting functions to manage cart and wishlist.
-    const { addItemToCart } = useCartActions();
-    const { removeItemFromWishlist } = useWishlistActions();
+
+    const dispatch = useDispatch();
+
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const [isRemovingFromWishlist, setIsRemovingFromWishlist] = useState(false);
 
     // Function to check whether item is already in cart or not.
     const isItemInCart = useIsItemInCart();
 
     // Getting item details.
+    const itemId = item['_id'];
     const itemImage = item['image'];
     const itemName = item['name'];
     const itemPrice = item['originalPrice'];
@@ -24,14 +28,40 @@ export default function WishlistItem({ item }) {
     const discountPrice = itemPrice - (itemPrice * (discountPercentage / 100));
 
     // Check if the item is in the cart
-    const inCart = isItemInCart(itemName);
+    const inCart = isItemInCart(itemId);
+
+    const addItemToCart = async () => {
+        if (inCart) return;
+        setIsAddingToCart(true);
+        try {
+            await addToCart(itemId);
+            dispatch(addProductIdToCart(itemId));
+        } catch (error) {
+            // Todo: Add toaster notification.
+        } finally {
+            setIsAddingToCart(false);
+        }
+    }
+
+    const removeItemFromWishlist = async () => {
+        setIsRemovingFromWishlist(true);
+        try {
+            await removeFromWishlist(itemId);
+            dispatch(removeProductIdFromWishlist(itemId));
+        } catch (error) {
+            // Todo: Add toaster notification.
+        } finally {
+            setIsRemovingFromWishlist(false);
+        }
+    }
 
     return (
         <div className="relative p-4 mx-auto w-64 max-w-[70vw] rounded-2xl shadow-product-card-shadow hover:shadow-product-card-shadow-hover duration-300">
 
             <button
-                className="absolute top-0 right-0 m-2"
-                onClick={() => { removeItemFromWishlist(itemName) }}
+                className={`absolute top-0 right-0 m-2 ${isRemovingFromWishlist ? "opacity-50" : "opacity-100"}`}
+                onClick={removeItemFromWishlist}
+                disabled={isRemovingFromWishlist}
             >
                 <FontAwesomeIcon
                     icon="fa-solid fa-heart"
@@ -68,8 +98,9 @@ export default function WishlistItem({ item }) {
             </Link>
 
             <button
-                className="bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300"
-                onClick={() => { removeItemFromWishlist(itemName) }}
+                className={`bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300 ${isRemovingFromWishlist ? "opacity-50" : "opacity-100"}`}
+                onClick={removeItemFromWishlist}
+                disabled={isRemovingFromWishlist}
             >
                 Remove
             </button>
@@ -83,8 +114,9 @@ export default function WishlistItem({ item }) {
                 </Link>
             ) : (
                 <button
-                    className="bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300"
-                    onClick={() => { addItemToCart(item) }}
+                    className={`bg-slate-900 border-2 border-slate-900 text-white w-full mt-4 rounded-md py-[6px] tracking-wider uppercase hover:text-slate-900 hover:bg-white duration-300 ${isAddingToCart ? "opacity-50" : "opacity-100"}`}
+                    onClick={addItemToCart}
+                    disabled={isAddingToCart}
                 >
                     Move to Cart
                 </button>
