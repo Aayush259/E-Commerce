@@ -39,6 +39,7 @@ export const login = async (email, password) => {
     }
 };
 
+// Get user.
 export const getUser = async () => {
     const accessToken = getAccessToken();
 
@@ -84,3 +85,27 @@ export const refreshAccessToken = async () => {
         throw error.response.message;
     }
 };
+
+export const updateContactInfo = async ({ address, phone, pincode, city, state }) => {
+    const accessToken = getAccessToken();
+
+    if (!accessToken) return false;
+    
+    try {
+        const response = await axios.post(
+            `${API_URL}/auth/updateContact`,
+            { address, phone, pincode, city, state },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        )
+
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.log("error");
+        throw error;
+    }
+}
