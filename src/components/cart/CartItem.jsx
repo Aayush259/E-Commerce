@@ -4,12 +4,12 @@ import { useIsItemInWishlist } from '../../hooks/useStoreItems.js';
 import { addToWishlist, removeFromCart, removeFromWishlist } from '../../app/product.js';
 import { useDispatch } from 'react-redux';
 import { addProductIdToWishlist, removeProductIdFromCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
+import { useToast } from '../ToastContextProvider.jsx';
 
 export default function CartItem({ item, incrementItemCount, decrementItemCount }) {
 
     const dispatch = useDispatch();
-
-    // const [count, setCount] = useState(1);
+    const { addToast } = useToast();
 
     const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
     const [isRemovingFromCart, setIsRemovingFromCart] = useState(false);
@@ -38,15 +38,17 @@ export default function CartItem({ item, incrementItemCount, decrementItemCount 
             try {
                 await removeFromWishlist(itemId);
                 dispatch(removeProductIdFromWishlist(itemId));
+                addToast('Removed from wishlist.', true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast('Failed to remove.', false);
             }
         } else {
             try {
                 await addToWishlist(itemId);
                 dispatch(addProductIdToWishlist(itemId));
+                addToast('Added to wishlist.', true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast('Failed to add.', false);
             }
         }
 
@@ -60,8 +62,9 @@ export default function CartItem({ item, incrementItemCount, decrementItemCount 
         try {
             await removeFromCart(itemId);
             dispatch(removeProductIdFromCart(itemId));
+            addToast('Removed from cart.', true);
         } catch (error) {
-            // Todo: Add toaster notification.
+            addToast('Failed to remove.', false);
         }
         setIsRemovingFromCart(false);
     }
