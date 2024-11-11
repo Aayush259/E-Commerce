@@ -4,28 +4,35 @@ import { Link } from 'react-router-dom';
 import NavigationLink from './NavigationLink.jsx';
 import Search from './Search.jsx';
 import { useUser } from '../../hooks/useStoreItems.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Nav() {
 
     const { isLoggedIn } = useUser();
 
+    const [searchOpen, setSearchOpen] = useState(false);
+
     // Array of navigation links text and their links.
     const navigationLinks = [
         {
             linkText: 'Products',
-            linkTo: '/E-Commerce/products'
+            linkTo: '/E-Commerce/products',
+            icon: 'fa-solid fa-headphones'
         },
         {
             linkText: 'Wishlist',
-            linkTo: '/E-Commerce/wishlist'
+            linkTo: '/E-Commerce/wishlist',
+            icon: 'fa-solid fa-heart'
         },
         {
             linkText: 'MyCart',
-            linkTo: '/E-Commerce/cart'
+            linkTo: '/E-Commerce/cart',
+            icon: 'fa-solid fa-cart-shopping'
         },
         {
             linkText: isLoggedIn ? 'Account' : 'Login',
-            linkTo: isLoggedIn ? '/E-Commerce/account/profile' : '/E-Commerce/login'
+            linkTo: isLoggedIn ? '/E-Commerce/account/profile' : '/E-Commerce/login',
+            icon: isLoggedIn ? 'fa-solid fa-user' : 'fa-solid fa-right-to-bracket'
         },
     ];
 
@@ -76,7 +83,7 @@ export default function Nav() {
                 </p>
             </Link>
             <button
-                className="absolute top-0 right-6 z-30 h-full flex flex-col items-center justify-center sm:hover:opacity-75 xl:hidden duration-300"
+                className="absolute top-0 right-6 z-30 h-full flex flex-col items-center justify-center sm:hover:opacity-75 md:hidden duration-300"
                 onClick={handleHamburgerClick}
             >
                 <div
@@ -91,12 +98,21 @@ export default function Nav() {
             </button>
 
             <div
-                className={`text-white text-lg font-medium sm:text-xl mr-4 flex flex-col items-center xl:flex-row gap-0 xl:gap-8 absolute z-10 left-0 xl:static bg-black w-[100vw] xl:w-fit px-0 xl:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
+                className={`text-white text-lg font-medium sm:text-xl mr-4 flex flex-col items-center md:flex-row gap-0 md:gap-8 absolute z-10 left-0 md:static bg-black w-[100vw] md:w-fit px-0 md:py-0 duration-1000 py-0 ${hamActive ? "py-4 top-[72px]" : "top-[-100vh]"}`}
             >
-                <Search />
+                <div className={`duration-500 -mb-8 md:mb-0 md:-mr-8 ${searchOpen ? "w-full" : "w-fit md:w-0"}`}>
+                    <Search setSearchOpen={setSearchOpen} />
+                </div>
+
+                <button
+                    className={`duration-500 overflow-hidden ${searchOpen ? "w-0" : "w-0 md:w-full"}`}
+                    onClick={() => setSearchOpen(true)}
+                >
+                    <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" className={`${searchOpen ? "hidden" : "block"}`} />
+                </button>
                 {
                     navigationLinks.map(link => (
-                        <NavigationLink key={link['linkText']} linkText={link['linkText']} linkTo={link['linkTo']} setHamActive={setHamActive} />
+                        <NavigationLink key={link['linkText']} linkText={link['linkText']} linkTo={link['linkTo']} setHamActive={setHamActive} icon={link['icon']} />
                     ))
                 }
             </div>
