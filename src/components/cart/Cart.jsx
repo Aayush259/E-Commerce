@@ -8,12 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch } from 'react-redux';
 import { clearCartIds } from '../../features/user/userSlice.js';
 import { Link } from 'react-router-dom';
+import { useToast } from '../ToastContextProvider.jsx';
 
 export default function Cart() {
 
     const { user, isLoggedIn } = useUser();
 
     const dispatch = useDispatch();
+    const { addToast } = useToast();
 
     const [gettingCartItems, setGettingCartItems] = useState(true);
     const [cartItemsError, setCartItemsError] = useState(false);
@@ -52,8 +54,9 @@ export default function Cart() {
                 try {
                     await clearCart();
                     dispatch(clearCartIds());
+                    addToast("Order placed.", true);
                 } catch (error) {
-                    // Todo: Add toaster notification.
+                    addToast("Failed to place order.", false);
                 }
             }
             setGettingCartItems(false);
