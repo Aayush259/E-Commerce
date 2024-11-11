@@ -16,13 +16,18 @@ export default {
           '0%': { transform: 'scale(1)', opacity: '1' },
           '50%': { transform: 'scale(0)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' }
+        },
+        'in': {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' }
         }
       },
 
       animation: {
         'load-1': 'loading 1s ease-in-out infinite',
         'load-2': 'loading 1s ease-in-out 0.2s infinite',
-        'load-3': 'loading 1s ease-in-out 0.4s infinite'
+        'load-3': 'loading 1s ease-in-out 0.4s infinite',
+        'in': 'in 0.2s ease-in-out'
       }
     },
   },
