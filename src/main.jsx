@@ -6,6 +6,7 @@ import App from './App.jsx';
 import { Provider } from 'react-redux';
 import store from './app/store.js';
 import AuthGuard from './components/AuthGuard.jsx';
+import { ToastProvider } from './components/ToastContextProvider.jsx';
 const Home = lazy(() => import('./components/home/Home.jsx'));
 const ProductsPage = lazy(() => import('./pages/Products.jsx'));
 const ProductDetail = lazy(() => import('./components/products/ProductDetail.jsx'));
@@ -42,8 +43,10 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
+  <ToastProvider>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
+  </ToastProvider>
   // </React.StrictMode>
 );
