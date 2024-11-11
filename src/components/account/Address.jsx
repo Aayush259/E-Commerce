@@ -4,20 +4,22 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/useStoreItems';
 import { updateUser } from '../../features/user/userSlice';
+import { useToast } from '../ToastContextProvider';
 
 export default function Address() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { addToast } = useToast();
 
     const { user } = useUser();
 
     const [contactInfo, setContactInfo] = useState({
-        address: "",
-        phone: "",
-        pincode: "",
-        city: "",
-        state: "",
+        address: user?.address ?? "",
+        phone: user?.phone ?? "",
+        pincode: user?.pincode ?? "",
+        city: user?.city ?? "",
+        state: user?.state ?? "",
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,11 +28,24 @@ export default function Address() {
         e.preventDefault();
         setIsSubmitting(true);
 
+        // Check if all fields are filled.
         if (!contactInfo.address || !contactInfo.phone || !contactInfo.pincode || !contactInfo.city || !contactInfo.state) {
             console.log(contactInfo)
             console.log("Please fill all the fields");
             setIsSubmitting(false);
-            // Todo: Add toaster notification.
+            addToast("All fields are required.", false);
+            return;
+        }
+
+        // Check if all fields are same as previous.
+        if (contactInfo.address === user?.address &&
+            contactInfo.phone === user?.phone &&
+            contactInfo.pincode === user?.pincode &&
+            contactInfo.city === user?.city &&
+            contactInfo.state === user?.state
+        ) {
+            setIsSubmitting(false);
+            addToast("Nothing to update.", false);
             return;
         }
 
@@ -44,9 +59,10 @@ export default function Address() {
                 city: contactInfo.city,
                 state: contactInfo.state,
             }));
+            addToast("Updated successfully.", true);
             navigate("/E-Commerce/account/profile");
         } catch (error) {
-            // Todo: Add toaster notification.
+            addToast("Failed to update.", false);
         }
         setIsSubmitting(false);
     }
