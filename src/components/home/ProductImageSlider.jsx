@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import productImg1 from '../../images/slider-images/product-img-1.jpg';
-import productImg2 from '../../images/slider-images/product-img-2.jpg';
-import productImg3 from '../../images/slider-images/product-img-3.jpg';
+import productImg1 from '../../images/slider-images/slider1.jpg';
+import productImg2 from '../../images/slider-images/slider2.jpg';
+import productImg3 from '../../images/slider-images/slider3.jpg';
+import productImg4 from '../../images/slider-images/slider4.jpg';
+import productImg5 from '../../images/slider-images/slider5.jpg';
 
 export default function ProductImageSlider() {
 
@@ -16,7 +17,13 @@ export default function ProductImageSlider() {
         },
         {
             image: productImg3
-        }
+        },
+        {
+            image: productImg4
+        },
+        {
+            image: productImg5
+        },
     ];
 
     // State for index of current image in slider.
@@ -40,25 +47,39 @@ export default function ProductImageSlider() {
     useEffect(() => {
         const interval = setInterval(() => {
             nextSlide();
-        }, 4000);
+        }, 6000);
 
         // Cleanup the interval on component unmount.
         return () => clearInterval(interval);
     }, [currentIndex]);
 
     return (
-        <div className="w-[100vw] h-[780px] max-h-[40vh] md:max-h-[90vh] m-auto mb-4 relative group">
+        <div>
             <div
-                style={{backgroundImage: `url(${slides[currentIndex]['image']})`}}
-                className="w-full h-full bg-center bg-cover duration-500"
-            ></div>
-
-            <button className="md:hidden md:group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/70 text-white cursor-pointer" onClick={prevSlide}>
-                <FontAwesomeIcon icon="fa-solid fa-angle-left" />
-            </button>
-            <button className="md:hidden md:group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/70 text-white cursor-pointer" onClick={nextSlide}>
-                <FontAwesomeIcon icon="fa-solid fa-angle-right" />
-            </button>
+                className="w-fit h-[780px] max-h-[40vh] md:max-h-[80vh] m-auto mb-4 relative group overflow-hidden flex items-center duration-1000"
+                style={{ marginLeft: `-${currentIndex * 100}vw` }}
+            >
+                {
+                    slides.map((slide, index) => (
+                        <div
+                            key={index}
+                            className="w-[100vw] flex-shrink-0 h-full bg-center bg-cover duration-500"
+                            style={{ backgroundImage: `url(${slide.image})` }}
+                        />
+                    ))
+                }
+            </div>
+            <div className="flex flex-row items-center justify-center gap-2 w-fit mx-auto">
+                {
+                    Array(slides.length).fill().map((_, index) => (
+                        <div
+                            key={index}
+                            className={`w-3 h-3 mt-2 rounded-full cursor-pointer duration-1000 ${currentIndex === index ? "bg-slate-900" : "bg-slate-300"}`}
+                            onClick={() => setCurrentIndex(index)}
+                        />
+                    ))
+                }
+            </div>
         </div>
     );
 };
