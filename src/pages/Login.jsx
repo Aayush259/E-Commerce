@@ -3,11 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../app/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../features/user/userSlice';
+import { useToast } from '../components/ToastContextProvider';
 
 export default function Login() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { addToast } = useToast();
 
     const [data, setData] = useState({
         email: '',
@@ -16,14 +18,14 @@ export default function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
         if (!data.email && !data.password) return alert('All fields are required.');
 
         const res = await login(data.email, data.password);
 
         if (res.ok) {
+            addToast('Logged in successfully.', true);
             navigate('/E-Commerce/products');
-            dispatch(setUser({ id: res.data.user._id, name: res.data.user.name, email: res.data.user.email }));
+            dispatch(setUser({ id: res.data.user._id, name: res.data.user.name, email: res.data.user.email, cart: res.data.user?.cart, wishlist: res.data.user?.wishlist, address: res.data.user?.address, phone: res.data.user?.phone, pincode: res.data.user?.pincode, city: res.data.user?.city, state: res.data.user?.state }));
         }
     };
 
