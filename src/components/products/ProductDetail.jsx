@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useIsItemInCart, useIsItemInWishlist, useProducts, useUser } from '../../hooks/useStoreItems.js';
+import { useProducts, useUser } from '../../hooks/useStoreItems.js';
 import useGetProducts from '../../hooks/useGetProducts.js';
 import Loader from '../Loader.jsx';
 import Rating from './Rating.jsx';
 import { useDispatch } from 'react-redux';
 import { addToCart, addToWishlist, removeFromCart, removeFromWishlist } from '../../app/product.js';
 import { addProductIdToCart, addProductIdToWishlist, removeProductIdFromCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
+import { useToast } from '../ToastContextProvider.jsx';
 
 export default function ProductDetail() {
 
     const { user, isLoggedIn } = useUser();
+    const { addToast } = useToast();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -23,12 +25,6 @@ export default function ProductDetail() {
 
     // Getting product name from URL.
     const { productname } = useParams();
-
-    // Function to check whether the item is already in cart or not.
-    const isItemInCart = useIsItemInCart();
-
-    // Function to check whether the item is already in wishlist or not.
-    const isItemInWishlist = useIsItemInWishlist();
 
     // State for product whose details have to be shown.
     const [productDetails, setProductDetails] = useState(null);
@@ -72,16 +68,18 @@ export default function ProductDetail() {
                 await removeFromCart(productId);
                 dispatch(removeProductIdFromCart(productId));
                 setIsAddedInCart(false);
+                addToast(`Removed from cart.`, true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast(`Failed to remove.`, false);
             }
         } else {
             try {
                 await addToCart(productId);
                 dispatch(addProductIdToCart(productId));
                 setIsAddedInCart(true);
+                addToast(`Added to cart.`, true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast('Failed to add.', false);
             }
         };
 
@@ -105,16 +103,18 @@ export default function ProductDetail() {
                 await removeFromWishlist(productId);
                 dispatch(removeProductIdFromWishlist(productId));
                 setIsAddedInWishlist(false);
+                addToast('Removed from wishlist.', true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast('Failed to remove.', false);
             }
         } else {
             try {
                 await addToWishlist(productId);
                 dispatch(addProductIdToWishlist(productId));
                 setIsAddedInWishlist(true);
+                addToast('Added to wishlist.', true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast('Failed to add.', false);
             }
         };
 
@@ -195,12 +195,12 @@ export default function ProductDetail() {
                                     <span className="font-semibold">Description: </span>
                                     {productDetails['description']}
                                 </p>
-                                
+
                                 <p>
                                     <span className="font-semibold">Type: </span>
                                     {productDetails['category']}
                                 </p>
-                                
+
                                 <p>
                                     <span className="font-semibold">Added In Year: </span>
                                     {productDetails['yearAdded']}
