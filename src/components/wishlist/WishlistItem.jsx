@@ -6,11 +6,13 @@ import { useIsItemInCart } from '../../hooks/useStoreItems.js';
 import { addToCart, removeFromWishlist } from '../../app/product.js';
 import { useDispatch } from 'react-redux';
 import { addProductIdToCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
+import { useToast } from '../ToastContextProvider.jsx';
 
 export default function WishlistItem({ item }) {
 
 
     const dispatch = useDispatch();
+    const { addToast } = useToast();
 
     const [isAddingToCart, setIsAddingToCart] = useState(false);
     const [isRemovingFromWishlist, setIsRemovingFromWishlist] = useState(false);
@@ -36,8 +38,9 @@ export default function WishlistItem({ item }) {
         try {
             await addToCart(itemId);
             dispatch(addProductIdToCart(itemId));
+            addToast('Added to cart.', true);
         } catch (error) {
-            // Todo: Add toaster notification.
+            addToast('Failed to add.', false);
         } finally {
             setIsAddingToCart(false);
         }
@@ -48,8 +51,9 @@ export default function WishlistItem({ item }) {
         try {
             await removeFromWishlist(itemId);
             dispatch(removeProductIdFromWishlist(itemId));
+            addToast('Removed from wishlist.', true);
         } catch (error) {
-            // Todo: Add toaster notification.
+            addToast('Failed to remove.', false);
         } finally {
             setIsRemovingFromWishlist(false);
         }
