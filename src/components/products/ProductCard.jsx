@@ -6,10 +6,13 @@ import { useIsItemInCart, useIsItemInWishlist, useUser } from '../../hooks/useSt
 import { addToCart, addToWishlist, removeFromCart, removeFromWishlist } from '../../app/product.js';
 import { addProductIdToCart, addProductIdToWishlist, removeProductIdFromCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
 import { useDispatch } from 'react-redux';
+import { useToast } from '../ToastContextProvider.jsx';
 
 export default function ProductCard({ productDetails }) {
 
-    const { user, isLoggedIn } = useUser();
+    const { isLoggedIn } = useUser();
+
+    const { addToast } = useToast();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -52,16 +55,18 @@ export default function ProductCard({ productDetails }) {
                 await removeFromCart(productId);
                 dispatch(removeProductIdFromCart(productId));
                 setIsAddedInCart(false);
+                addToast("Removed from cart.", "success");
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast(`Failed to remove.`, false);
             }
         } else {
             try {
                 await addToCart(productId);
                 dispatch(addProductIdToCart(productId));
                 setIsAddedInCart(true);
+                addToast(`Added to cart.`, true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast(`Failed to add`, false);
             }
         };
 
@@ -83,16 +88,18 @@ export default function ProductCard({ productDetails }) {
                 await removeFromWishlist(productId);
                 dispatch(removeProductIdFromWishlist(productId));
                 setIsAddedInWishlist(false);
+                addToast(`Removed from wishlist.`, true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast(`Failed to remove.`, false);
             }
         } else {
             try {
                 await addToWishlist(productId);
                 dispatch(addProductIdToWishlist(productId));
                 setIsAddedInWishlist(true);
+                addToast(`Added to wishlist.`, true);
             } catch (error) {
-                // Todo: Add toaster notification.
+                addToast(`Failed to add.`, false);
             }
         };
 
