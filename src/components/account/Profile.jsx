@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useUser } from '../../hooks/useStoreItems';
+import { useToast } from '../ToastContextProvider';
+import { logout } from '../../app/auth';
 
 export default function Profile() {
 
     const { user } = useUser();
+    const { addToast } = useToast();
+
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+    const logoutUser = async () => {
+        setIsLoggingOut(true);
+        
+        try {
+            await logout(user._id);
+            addToast('Logged out successfully.', true);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoggingOut(false);
+            window.location.reload();
+        }
+    };
 
     return (
         <div className="text-xl md:text-2xl font-semibold flex flex-col items-start justify-center w-full py-7 px-6 gap-5">
@@ -83,6 +102,15 @@ export default function Profile() {
                     </span>
                 </p>
             }
+
+            <button
+                type="button"
+                className={`bg-slate-900 p-2 my-2 border w-full text-white border-slate-900 font-semibold text-lg hover:bg-white hover:text-slate-900 duration-300 ${isLoggingOut ? "opacity-50" : "opacity-100"} `}
+                disabled={isLoggingOut}
+                onClick={logoutUser}
+            >
+                Logout
+            </button>
         </div>
     );
 };
