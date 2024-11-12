@@ -54,7 +54,7 @@ export default function ProductImageSlider() {
     }, [currentIndex]);
 
     return (
-        <div>
+        <div className="w-screen overflow-hidden">
             <div
                 className="w-fit h-[780px] max-h-[40vh] md:max-h-[80vh] m-auto mb-4 relative group overflow-hidden flex items-center duration-1000"
                 style={{ marginLeft: `-${currentIndex * 100}vw` }}
