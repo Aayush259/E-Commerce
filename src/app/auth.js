@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://e-commerce-backend-sj1i.onrender.com";
 
 // Set access token in local storage.
 const setAccessToken = (accessToken) => {
