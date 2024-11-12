@@ -20,6 +20,10 @@ export default {
         'in': {
           '0%': { transform: 'translateX(100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' }
+        },
+        'toast': {
+          '0%': { width: '100%' },
+          '100%': { width: '0%' }
         }
       },
 
@@ -27,7 +31,8 @@ export default {
         'load-1': 'loading 1s ease-in-out infinite',
         'load-2': 'loading 1s ease-in-out 0.2s infinite',
         'load-3': 'loading 1s ease-in-out 0.4s infinite',
-        'in': 'in 0.2s ease-in-out'
+        'in': 'in 0.2s ease-in-out',
+        'toast': 'toast 4s linear forwards'
       }
     },
   },
