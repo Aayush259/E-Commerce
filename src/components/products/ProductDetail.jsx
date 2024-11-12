@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useProducts, useUser } from '../../hooks/useStoreItems.js';
-import useGetProducts from '../../hooks/useGetProducts.js';
 import Loader from '../Loader.jsx';
 import Rating from './Rating.jsx';
 import { useDispatch } from 'react-redux';
 import { addToCart, addToWishlist, removeFromCart, removeFromWishlist } from '../../app/product.js';
 import { addProductIdToCart, addProductIdToWishlist, removeProductIdFromCart, removeProductIdFromWishlist } from '../../features/user/userSlice.js';
 import { useToast } from '../ToastContextProvider.jsx';
+import { getProducts } from '../../features/product/productSlice.js';
 
 export default function ProductDetail() {
 
@@ -16,9 +16,6 @@ export default function ProductDetail() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    // Getting products in store if not exists.
-    useGetProducts();
 
     // Getting product data from store.
     const productData = useProducts();
@@ -50,6 +47,13 @@ export default function ProductDetail() {
 
         setProductDetails(productData.filter(product => product['name'] === productname)[0]);
     }, [productData]);
+
+    // Getting products in store if not exists.
+    useEffect(() => {
+        if (productData && productData.length <= 0) {
+            dispatch(getProducts());
+        }
+    }, []);
 
     // Handle add/remove from cart.
     const handleCartAction = async () => {

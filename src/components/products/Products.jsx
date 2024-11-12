@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard.jsx';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import StatusCode from '../../utils/StatusCode.js';
-import useGetProducts from '../../hooks/useGetProducts.js';
 import FilterSection from './FilterSection.jsx';
 import Loader from '../Loader.jsx';
+import { getProducts } from '../../features/product/productSlice.js';
 
 export default function Products() {
 
-    // Getting products in store.
-    useGetProducts();
-
     // Getting product data and status from store.
     const { value: productData, status } = useSelector(state => state.product);
+    const dispatch = useDispatch();
 
     // Getting category and product name from URL.
     const { categoryname, productname } = useParams();
@@ -96,6 +94,13 @@ export default function Products() {
         setProductsToDisplay(filteredProducts);
 
     }, [categoryname, productname, productData, filterCriteria, sortPreference, ratingsPreference]);
+
+    // Getting products in store.
+    useEffect(() => {
+        if (productData && productData.length <= 0) {
+            dispatch(getProducts());
+        }
+    }, []);
 
     // If status is loading, display loader.
     if (status === StatusCode.LOADING) {
