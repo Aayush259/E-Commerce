@@ -7,25 +7,62 @@ import { useToast } from '../components/ToastContextProvider';
 
 export default function Login() {
 
+    // Hooks for navigation, state management and notifications.
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { addToast } = useToast();
 
+    // Loading state for login button.
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+    // Form data state.
     const [data, setData] = useState({
         email: '',
         password: ''
     });
 
+    // Handle form submission.
     const handleLogin = async (e) => {
         e.preventDefault();
+
+        // Basic form validation.
         if (!data.email && !data.password) return alert('All fields are required.');
 
-        const res = await login(data.email, data.password);
+        setIsLoggingIn(true);
 
-        if (res.ok) {
-            addToast('Logged in successfully.', true);
-            navigate('/E-Commerce/products');
-            dispatch(setUser({ id: res.data.user._id, name: res.data.user.name, email: res.data.user.email, cart: res.data.user?.cart, wishlist: res.data.user?.wishlist, address: res.data.user?.address, phone: res.data.user?.phone, pincode: res.data.user?.pincode, city: res.data.user?.city, state: res.data.user?.state }));
+        try {
+            // Attempt login with provided credentials.
+            const res = await login(data.email, data.password);
+            if (res.ok) {
+                // On successful login:
+                // 1. Show success notification.
+                addToast('Logged in successfully.', true);
+                
+                // 2. Navigate to products page.
+                navigate('/E-Commerce/products');
+
+                // 3. Update Redux store with user data.
+                dispatch(setUser({ 
+                    id: res.data.user._id, 
+                    name: res.data.user.name, 
+                    email: res.data.user.email, 
+                    cart: res.data.user?.cart, 
+                    wishlist: res.data.user?.wishlist, 
+                    address: res.data.user?.address, 
+                    phone: res.data.user?.phone, 
+                    pincode: res.data.user?.pincode, 
+                    city: res.data.user?.city, 
+                    state: res.data.user?.state 
+                }));
+            } else {
+                addToast('Failed to login.', false);
+            }
+        } catch (error) {
+            // Show error notification on login failure.
+            addToast('Failed to login.', false);
+        } finally {
+            // Reset loading state.
+            setIsLoggingIn(false);
         }
     };
 
@@ -53,7 +90,8 @@ export default function Login() {
 
                 <button
                     type='submit'
-                    className={`w-full bg-slate-900 text-white my-3 text-lg md:text-xl py-2 border border-slate-900 hover:bg-white hover:text-slate-900 mt-4 duration-300`}
+                    className={`w-full bg-slate-900 text-white my-3 text-lg md:text-xl py-2 border border-slate-900 hover:bg-white hover:text-slate-900 mt-4 duration-300 ${isLoggingIn ? "opacity-50" : "opacity-100"}`}
+                    disabled={isLoggingIn}
                 >
                     Login
                 </button>

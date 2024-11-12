@@ -1,26 +1,50 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../app/auth';
+import { useToast } from '../components/ToastContextProvider';
 
 export default function Signup() {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();     // Hook for programmatic navigation.
+    const { addToast } = useToast();    // Custom hook for displaying toast notifications.
 
+    // State to manage form input data.
     const [data, setData] = useState({
         name: '',
         email: '',
         password: '',
     });
 
+    // State to track signup process.
+    const [isSigningUp, setIsSigningUp] = useState(false);
+
+    // Handle form submission.
     const handleSignup = async (e) => {
         e.preventDefault();
 
+        // Basic form validation.
         if (!data.name && !data.email && !data.password) return alert('All fields are required.');
 
-        const res = await signup(data.name, data.email, data.password);
+        // Set loading state.
+        setIsSigningUp(true);
 
-        if (res.ok) {
-            navigate('/E-Commerce/login');
+        try {
+            // Attempt to signup user.
+            const res = await signup(data.name, data.email, data.password);
+
+            if (res.ok) {
+                // Redirect to login page on successful signup.
+                navigate('/E-Commerce/login');
+            } else {
+                // Show error toast if signup fails.
+                addToast('Failed to signup.', false);
+            }
+        } catch (error) {
+            // Show error toast if request fails.
+            addToast('Failed to signup.', false);
+        } finally {
+            // Reset loading state.
+            setIsSigningUp(false);
         }
     };
 
@@ -47,7 +71,8 @@ export default function Signup() {
                 }
 
                 <button
-                    className={`w-full bg-slate-900 text-white my-3 text-lg md:text-xl py-2 border border-slate-900 hover:bg-white hover:text-slate-900 mt-4 duration-300`}
+                    className={`w-full bg-slate-900 text-white my-3 text-lg md:text-xl py-2 border border-slate-900 hover:bg-white hover:text-slate-900 mt-4 duration-300 ${isSigningUp ? "opacity-50" : "opacity-100"}`}
+                    disabled={isSigningUp}
                 >
                     Sign Up
                 </button>
