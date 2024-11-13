@@ -63,7 +63,7 @@ export default function ProductImageSlider() {
                     slides.map((slide, index) => (
                         <div
                             key={index}
-                            className="w-[100vw] flex-shrink-0 h-full bg-center bg-cover duration-500"
+                            className="w-[100vw] flex-shrink-0 h-full bg-no-repeat bg-center bg-cover duration-500"
                             style={{ backgroundImage: `url(${slide.image})` }}
                         />
                     ))
