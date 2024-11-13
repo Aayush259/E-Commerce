@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAccessToken } from "./auth";
 
-const API_URL = "https://e-commerce-backend-l7su.onrender.com";
+const API_URL = "https://e-commerce-backend-eight-mu.vercel.app";
 
 export const fetchProducts = async () => {
     try {

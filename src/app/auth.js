@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://e-commerce-backend-l7su.onrender.com";
+const API_URL = "https://e-commerce-backend-eight-mu.vercel.app";
 
 // Set access token in local storage.
 const setAccessToken = (accessToken) => {
