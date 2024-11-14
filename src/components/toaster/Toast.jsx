@@ -10,7 +10,7 @@ const Toast = ({ message, onClose, success }) => {
     }, [])
 
     return (
-        <div className="bg-slate-800 max-w-[80vw] min-w-[350px] p-3 md:py-4 md:px-8 text-center text-white flex justify-between items-center rounded-xl m-2 md:text-xl overflow-ellipsis animate-in relative overflow-hidden">
+        <div className="bg-slate-800 max-w-[80vw] w-[350px] mx-auto md:mx-0 p-3 md:py-4 md:px-8 text-center text-white flex justify-between items-center rounded-xl m-2 md:text-xl overflow-ellipsis animate-in relative overflow-hidden">
             <div
             className={`absolute h-1 left-0 bottom-0 ${success ? 'bg-green-500' : 'bg-red-500'} animate-toast`}
             />
