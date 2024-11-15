@@ -16,7 +16,7 @@ export default function NavigationLink({ linkText, linkTo, setHamActive, icon })
         >
             {
                 isLoggedIn && user?.cart && user.cart.length > 0 && linkText === 'MyCart' && <div
-                    className="text-xs text-slate-900 bg-yellow-400 w-4 h-4 flex justify-center items-center rounded-full font-bold absolute translate-x-1/4 -translate-y-[110%]"
+                    className="hidden text-xs text-slate-900 bg-yellow-400 w-4 h-4 md:flex justify-center items-center rounded-full font-bold absolute translate-x-1/4 -translate-y-[110%]"
                 >
                     {user.cart.length}
                 </div>
